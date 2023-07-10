@@ -3,7 +3,8 @@ import { useFonts } from 'expo-font';
 import { StyleSheet, View } from 'react-native';
 // import { RegistrationScreen } from './screens/RegistrationScreen';
 // import { LoginScreen } from './screens/LoginScreen/LoginScreenForm';
-import {PostsScreen} from './screens/PostsScreen/PostsScreen';
+// import {PostsScreen} from './screens/PostsScreen/PostsScreen';
+import {CreatePostsScreen} from './screens/CreatePostsScreen/CreatePostsScreen';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -23,7 +24,7 @@ export default function App() {
       <StatusBar style="auto" />
       {/* <RegistrationScreen registerInfo={registerInfo}/> */}
       {/* <LoginScreen logininfo={loginInfo}/> */}
-      <PostsScreen/>
+      <CreatePostsScreen/>
     </View>
   );
 }
