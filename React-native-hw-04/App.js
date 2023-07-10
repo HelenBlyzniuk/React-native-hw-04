@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { useFonts } from 'expo-font';
 import { StyleSheet, View } from 'react-native';
-import { RegistrationScreen } from './screens/RegistrationScreen';
+// import { RegistrationScreen } from './screens/RegistrationScreen';
 // import { LoginScreen } from './screens/LoginScreen/LoginScreenForm';
+import {PostsScreen} from './screens/PostsScreen/PostsScreen';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -14,14 +15,15 @@ export default function App() {
   //   console.debug(info)
   // }
 
-  const registerInfo=(info)=>{
-    console.debug(info);
-  }
+  // const registerInfo=(info)=>{
+  //   console.debug(info);
+  // }
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <RegistrationScreen registerInfo={registerInfo}/>
+      {/* <RegistrationScreen registerInfo={registerInfo}/> */}
       {/* <LoginScreen logininfo={loginInfo}/> */}
+      <PostsScreen/>
     </View>
   );
 }
