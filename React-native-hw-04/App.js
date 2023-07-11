@@ -4,7 +4,8 @@ import { StyleSheet, View } from 'react-native';
 // import { RegistrationScreen } from './screens/RegistrationScreen';
 // import { LoginScreen } from './screens/LoginScreen/LoginScreenForm';
 // import {PostsScreen} from './screens/PostsScreen/PostsScreen';
-import {CreatePostsScreen} from './screens/CreatePostsScreen/CreatePostsScreen';
+// import {CreatePostsScreen} from './screens/CreatePostsScreen/CreatePostsScreen';
+import { ProfileScreen } from './screens/ProfileScreen/ProfileScreen';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -24,7 +25,8 @@ export default function App() {
       <StatusBar style="auto" />
       {/* <RegistrationScreen registerInfo={registerInfo}/> */}
       {/* <LoginScreen logininfo={loginInfo}/> */}
-      <CreatePostsScreen/>
+      {/* <CreatePostsScreen/> */}
+      <ProfileScreen/>
     </View>
   );
 }
