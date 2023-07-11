@@ -5,8 +5,8 @@ import { StyleSheet, View } from 'react-native';
 // import { LoginScreen } from './screens/LoginScreen/LoginScreenForm';
 // import {PostsScreen} from './screens/PostsScreen/PostsScreen';
 // import {CreatePostsScreen} from './screens/CreatePostsScreen/CreatePostsScreen';
-import { ProfileScreen } from './screens/ProfileScreen/ProfileScreen';
-
+// import { ProfileScreen } from './screens/ProfileScreen/ProfileScreen';
+import { CommentScreen } from './screens/CommentsScreen/CommentsScreen';
 export default function App() {
   const [fontsLoaded] = useFonts({
     'RobotoBold': require("./screens/fonts/Roboto-Black.ttf"),
@@ -26,7 +26,8 @@ export default function App() {
       {/* <RegistrationScreen registerInfo={registerInfo}/> */}
       {/* <LoginScreen logininfo={loginInfo}/> */}
       {/* <CreatePostsScreen/> */}
-      <ProfileScreen/>
+      {/* <ProfileScreen/> */}
+      <CommentScreen/>
     </View>
   );
 }

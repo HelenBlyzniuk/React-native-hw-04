@@ -84,13 +84,7 @@ import {
           paddingBottom: 43,
           height:'80%',
     },
-    title: {
-      fontSize: 30,
-      color: "#212121",
-      marginTop: 89,
-      marginBottom: 30,
-      textAlign: "center",
-    },
+  
     userInfo: {
         flexDirection: "row",
         marginTop: 32,
