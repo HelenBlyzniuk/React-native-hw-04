@@ -39,10 +39,16 @@ export default function App() {
         }}
       >
         {/* Аналог Routes */}
-        <MainStack.Screen name="Registration" component={RegistrationScreen} />
+        <MainStack.Screen name="Registration" component={RegistrationScreen}  screenOptions={{
+          headerShown: false,
+        }}/>
         {/* Аналог Route */}
-        <MainStack.Screen name="Login" component={LoginScreen} />
-        <MainStack.Screen name="Home" component={Home} />
+        <MainStack.Screen name="Login" component={LoginScreen}  screenOptions={{
+          headerShown: false,
+        }}/>
+        <MainStack.Screen name="Home" component={Home} screenOptions={{
+          headerShown: false,
+        }}/>
       </MainStack.Navigator>
       {/* <RegistrationScreen registerInfo={registerInfo}/> */}
       {/* <LoginScreen logininfo={loginInfo}/> */}

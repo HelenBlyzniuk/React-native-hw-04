@@ -49,7 +49,7 @@ export function PostsScreen() {
             </View>
           </View>
           <View style={styles.post_user_content}></View>
-          <View style={styles.post_user_footer}>
+          {/* <View style={styles.post_user_footer}>
             <Image
               style={styles.post_user_footer_image}
               source={require("../Images/grid.jpg")}
@@ -62,7 +62,7 @@ export function PostsScreen() {
               style={styles.post_user_footer_image}
               source={require("../Images/user.jpg")}
             />
-          </View>
+          </View> */}
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </View>
@@ -71,6 +71,10 @@ export function PostsScreen() {
 const styles = StyleSheet.create({
   post_page_container: {
     padding: 16,
+    flex: 1,
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "center",
   },
   page_title: {
     fontFamily: "RobotoMedium",

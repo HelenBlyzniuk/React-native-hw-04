@@ -24,19 +24,19 @@ export function LoginScreen() {
     setIsFocused(false);
     Keyboard.dismiss();
   };
-  const handleSubmit = ({logininfo}) => {
+  const handleSubmit = () => {
     if (email.trim() === "" || password.trim() === "") {
       Alert.alert("Заповніть всі поля!!!");
     }
-   
-    logininfo({ email, password });
+    navigation.navigate('Home',{email,password})
+    // logininfo({ email, password });
     setEmail("");
     setPassword("");
    
   };
 
   return (
-    <View>
+    <View  style={styles.container}>
       <ImageBackground
         style={styles.image}
         source={require("../Images/photoBG.png")}
@@ -101,6 +101,13 @@ export function LoginScreen() {
   );
 }
 const styles = StyleSheet.create({
+  container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingTop: 20,
+      },
   title: {
     fontFamily: "RobotoMedium",
     fontSize: 30,
