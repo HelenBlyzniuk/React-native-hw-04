@@ -29,13 +29,13 @@ export function CreatePostsScreen() {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={styles.post_page_header}>
+          {/* <View style={styles.post_page_header}>
             <Image
               source={require("../Images/arrow-left.jpg")}
               style={styles.logout_icon}
             />
             <Text style={styles.page_title}>Створити публікацію</Text>
-          </View>
+          </View> */}
 
 
           <View style={styles.post_user_container}>
@@ -104,7 +104,11 @@ export function CreatePostsScreen() {
 
 const styles = StyleSheet.create({
   post_page_container: {
-    //   padding:16,
+    flex: 1,
+        backgroundColor: "#fff",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingTop: 20,
   },
   page_title: {
     fontFamily: "RobotoMedium",

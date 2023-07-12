@@ -27,7 +27,7 @@ export function PostsScreen() {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <View style={styles.post_page_header}>
+          {/* <View style={styles.post_page_header}>
             <Text style={styles.page_title}>Публікації</Text>
             <TouchableOpacity
               onPress={() => {
@@ -39,7 +39,7 @@ export function PostsScreen() {
                 style={styles.logout_icon}
               ></Image>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           <View style={styles.post_user_container}>
             <View style={styles.post_user_photo} />
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "center",
+      minWidth:"100%",
   },
   page_title: {
     fontFamily: "RobotoMedium",
@@ -106,6 +107,8 @@ const styles = StyleSheet.create({
     margin: 0,
     gap: 10,
     paddingTop: 30,
+    justifyContent:'flex-start',
+    minWidth:340,
   },
   post_user_photo: {
     height: 60,
