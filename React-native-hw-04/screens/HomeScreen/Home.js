@@ -1,38 +1,252 @@
 import {
-   TouchableOpacity,
+   TouchableOpacity,StyleSheet
   } from "react-native";
 
   import { PostsScreen } from "../PostsScreen/PostsScreen";
+  import{ProfileScreen} from "../ProfileScreen/ProfileScreen";
+  import {CreatePostsScreen} from "../CreatePostsScreen/CreatePostsScreen"
 
-  import { useNavigation } from '@react-navigation/native';
-  import { createStackNavigator } from "@react-navigation/stack";
+  // import { useNavigation } from '@react-navigation/native';
+  // import { createStackNavigator } from "@react-navigation/stack";
+  import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+  import { Ionicons } from "@expo/vector-icons";
+  import { Feather } from "@expo/vector-icons";
+import SvgAddButton from "../../assets/svg/SvgAddButton";
 
 
-export function Home() {
-  const TabScreen = createStackNavigator();
-  const navigation = useNavigation();
 
-  function MyBackButton() {
-    const navigation = useNavigation();
-    return (
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Image source={'../Image/arrow-left.jpg'} name="arrow-back" size={24} color="#212121" />
-      </TouchableOpacity>
-    );
-  }
-//    const {params:{login,email,password}}=useRoute();
-//   console.debug(login,email,password)
-    return (
-<TabScreen.Navigator>
-      <TabScreen.Screen name="PostsScreen" component={PostsScreen} 
-      screenOptions={{
-         headerShown: false,
-        }} />
-      {/* <Tab.Screen name="Messages" component={Messages} /> */}
-   </TabScreen.Navigator>
+  const BottomTabs = createBottomTabNavigator();
+   
+  
+  export const Home = () => {
+  return (
+    <BottomTabs.Navigator
+      screenOptions={() => ({
+        tabBarStyle: {
+          height: 64,
+          paddingTop: 10,
+          paddingBottom: 20,
+
+          alignItems: 'center',
+          alignContent: 'center',
+          justifyContent: 'center',
+        },
+      })}
+      
+    >
+      <BottomTabs.Screen
+        name="Posts"
+        component={PostsScreen}
+        tabBarOptions={{
+          showLabel: false,
+          activeTintColor: '#FF6C00',
+          inactiveTintColor: '#212121',
+        }}
+        options={() => ({
+          ...postsOptions,
+          // headerRight: () => (
+          //   <SvgAddButton
+          //     onPress={() => navigation.navigate('Login')}
+          //     title="Return back"
+          //     color="#fff"
+          //     style={styles.logOut}
+          //   />
+          // ),
+          // tabBarButton: props => <TouchableOpacity {...props} style={styles.btnTab} />,
+          tabBarIcon: ({focused,color,size}) => {
+            return <Ionicons name='add-circle-outline' size={32} color={focused ? "#FF6C00" : "#BDBDBD"} />;
+          },
+        })}
+      />
+      <BottomTabs.Screen
+        name="CreatePosts"
+        component={CreatePostsScreen}
+        tabBarOptions={{
+          showLabel: false,
+          activeTintColor: '#FF6C00',
+          inactiveTintColor: '#212121',
+        }}
+        // options={({ navigation, route }) => ({
+        //   ...createPostsOptions,
+        //   headerLeft: () => (
+        //     <SvgArrowLeft
+        //       onPress={() => {
+        //         navigation.navigate('Posts');
+        //       }}
+        //       title="Return back"
+        //       color="#fff"
+        //       style={styles.arrowLeft}
+        //     />
+        //   ),
+        //   tabBarButton: props => (
+        //     <TouchableOpacity
+        //       {...props}
+        //       style={{
+        //         ...styles.btnTab,
+        //         backgroundColor: '#ff6c00',
+        //       }}
+        //     />
+        //   ),
+        //   tabBarIcon: () => {
+        //     return <SvgPlus fill={'#ffffff'} />;
+        //   },
+        // })}
+      />
+      <BottomTabs.Screen
+        name="Profile"
+        component={ProfileScreen}
+        tabBarOptions={{
+          showLabel: false,
+          activeTintColor: '#FF6C00',
+          inactiveTintColor: '#212121',
+        }}
+        // options={({ navigation, route }) => ({
+        //   ...createPostsOptions,
+        //   headerLeft: () => (
+        //     <SvgArrowLeft
+        //       onPress={() => navigation.navigate('Posts')}
+        //       title="Return back"
+        //       color="#fff"
+        //       style={styles.arrowLeft}
+        //     />
+        //   ),
+        //   tabBarButton: props => (
+        //     <TouchableOpacity
+        //       {...props}
+        //       style={{
+        //         ...styles.btnTab,
+        //         marginRight: 0,
+        //       }}
+        //     />
+        //   ),
+        //   tabBarIcon: ({ focused, color, size }) => {
+        //     return <SvgUser size={size} fill={color} />;
+        //   },
+        // })}
+      />
+    </BottomTabs.Navigator>
+  );
+};
+
+
+const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  arrowLeft: {
+    marginLeft: 16,
+    marginRight: 42,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  logOut: {
+    width: 24,
+    height: 24,
+    marginRight: 60,
+    marginRight: 16,
+    // paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  btnTab: {
+    alignSelf: 'center',
+    marginRight: 30,
+    width: 40,
+    height: 40,
+
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+  },
+  // btnActiveTab: {
+  //   alignSelf: 'center',
+  //   marginRight: 30,
+
+  //   width: 70,
+  //   height: 40,
+
+  //   paddingVertical: 8,
+  //   paddingHorizontal: 23,
+
+  //   backgroundColor: '#ff6c00',
+  //   borderRadius: 20,
+  // },
+});
+
+const createPostsOptions = {
+  title: 'Створити публікацію',
+  headerStyle: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'rgba(0, 0, 0, 0.3)',
+    boxShadow: '0px 0.5px 0px rgba(0, 0, 0, 0.3)',
+  },
+  headerTintColor: '#212121',
+  headerTitleStyle: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 17,
+    lineHeight: 22,
+
+    textAlign: 'center',
+  },
+};
+
+const postsOptions = {
+  title: 'Публікації',
+  headerStyle: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'rgba(0, 0, 0, 0.3)',
+    boxShadow: '0px 0.5px 0px rgba(0, 0, 0, 0.3)',
+  },
+  headerTintColor: '#212121',
+  headerTitleStyle: {
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: 17,
+    lineHeight: 22,
+
+    marginLeft: 120,
+
+    textAlign: 'center',
+  },
+};
+// export function Home() {
+//   const MainScreen = createStackNavigator();
+//   const navigation = useNavigation();
+
+//   function MyBackButton() {
+//     const navigation = useNavigation();
+//     return (
+//       <TouchableOpacity onPress={() => navigation.goBack()}>
+//         <Image source={'../Image/arrow-left.jpg'} name="arrow-back" size={24} color="#212121" />
+//       </TouchableOpacity>
+//     );
+//   }
+
+//     return (
+// <MainScreen.Navigator>
+//       <MainScreen.Screen name="Публікації" component={PostsScreen} 
+//       screenOptions={{
+//          headerShown: false,
+//         }} />
+//         <MainScreen.Screen name="Createpost" component={CreatePostsScreen} 
+//       screenOptions={{
+//          headerShown: false,
+//         }} />
+//         <MainScreen.Screen name="Profile" component={ProfileScreen} 
+//       screenOptions={{
+//          headerShown: false,
+//         }} />
      
-    );
-  }
+//    </MainScreen.Navigator>
+     
+//     );
+//   }
   // const styles = StyleSheet.create({
   //   container: {
   //     flex: 1,
@@ -42,3 +256,4 @@ export function Home() {
   //     paddingTop: 20,
   //   },
   // });
+
