@@ -10,10 +10,13 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 import { useState } from "react";
 
-export function LoginScreen({ logininfo }) {
+export function LoginScreen() {
+
+  const navigation = useNavigation();
   const [isFocused, setIsFocused] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,10 +28,11 @@ export function LoginScreen({ logininfo }) {
     if (email.trim() === "" || password.trim() === "") {
       Alert.alert("Заповніть всі поля!!!");
     }
-
+   
     logininfo({ email, password });
     setEmail("");
     setPassword("");
+   
   };
 
   return (
@@ -77,13 +81,17 @@ export function LoginScreen({ logininfo }) {
                 <TouchableOpacity
                   style={styles.btn_sign}
                   onPress={handleSubmit}
+                  
                 >
                   <Text style={styles.btn_sign_text}>Увійти</Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
                 <Text style={styles.sentence}>
                   Немає акаунту? Зареєструватися
                 </Text>
+                </TouchableOpacity>
+
               </View>
             </View>
           </KeyboardAvoidingView>

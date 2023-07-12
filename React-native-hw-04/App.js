@@ -6,7 +6,8 @@ import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 import { RegistrationScreen } from "./screens/RegistrationScreen";
 import { LoginScreen } from "./screens/LoginScreen/LoginScreenForm";
-import { PostsScreen } from "./screens/PostsScreen/PostsScreen";
+// import { PostsScreen } from "./screens/PostsScreen/PostsScreen";
+import { Home } from "./screens/HomeScreen/Home";
 
 // import {CreatePostsScreen} from './screens/CreatePostsScreen/CreatePostsScreen';
 // import { ProfileScreen } from './screens/ProfileScreen/ProfileScreen';
@@ -41,7 +42,7 @@ export default function App() {
         <MainStack.Screen name="Registration" component={RegistrationScreen} />
         {/* Аналог Route */}
         <MainStack.Screen name="Login" component={LoginScreen} />
-        <MainStack.Screen name="Home" component={PostsScreen} />
+        <MainStack.Screen name="Home" component={Home} />
       </MainStack.Navigator>
       {/* <RegistrationScreen registerInfo={registerInfo}/> */}
       {/* <LoginScreen logininfo={loginInfo}/> */}
