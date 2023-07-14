@@ -9,13 +9,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
+import { useState } from "react";
 
 // import { useState } from "react";
 
 export function PostsScreen() {
   const navigation = useNavigation();
-
+  const [isFocused, setIsFocused] = useState(false);
   const handleOnPress = () => {
     setIsFocused(false);
     Keyboard.dismiss();

@@ -5,7 +5,7 @@ import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
 import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 
 import { useNavigation } from "@react-navigation/native";
-// import { createStackNavigator } from "@react-navigation/stack";
+
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, MaterialIcons,AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -18,15 +18,28 @@ export const Home = () => {
   return (
     <BottomTabs.Navigator
       screenOptions={() => ({
+        tabBarShowLabel: false,
+        tabBarShowIcon: true,
         tabBarStyle: {
           height: 64,
           paddingTop: 10,
           paddingBottom: 20,
-
           alignItems: "center",
           alignContent: "center",
           justifyContent: "center",
         },
+        tabBarItemStyle: {
+          height: 40,
+          maxWidth: 70,
+          borderRadius: 20,
+          marginTop: 9,
+          marginRight: 15,
+          marginLeft: 15,
+        },
+       
+        tabBarActiveBackgroundColor: "#FF6C00",
+        tabBarActiveTintColor: "#FFFFFF",
+        tabBarInactiveBackgroundColor: "#FFFFFF",
       })}
     >
       <BottomTabs.Screen
@@ -50,13 +63,14 @@ export const Home = () => {
               style={styles.logOut}
             />
           ),
-
-          tabBarIcon: ({ focused, color, size }) => {
+         
+          tabBarIcon: ({color, size,focused }) => {
             return (
-              <Ionicons
-                name="add-circle-outline"
-                size={32}
-                color={focused ? "#FF6C00" : "#BDBDBD"}
+              <Feather
+                name="grid"
+                size={24}
+                
+                color={focused ? "white" : "#212121"}
               />
             );
           },
@@ -70,10 +84,10 @@ export const Home = () => {
           activeTintColor: "#FF6C00",
           inactiveTintColor: "#212121",
         }}
-        options={({ navigation, route }) => ({
+        options={({ navigation }) => ({
           ...createPostsOptions,
           headerLeft: () => (
-            <AntDesign name="arrowleft" size={24} color="#fff" 
+            <AntDesign name="arrowleft" size={24} color="black" 
               onPress={() => {
                 navigation.navigate('Posts');
               }}
@@ -81,21 +95,10 @@ export const Home = () => {
               style={styles.arrowLeft}
             />
           ),
-          tabBarButton: props => (
-            <TouchableOpacity
-              {...props}
-              style={{
-                ...styles.btnTab,
-                backgroundColor: '#ff6c00',
-              }}
-            />
-          ),
-          tabBarIcon: () => {
-           <Ionicons
-        name="add-circle-outline"
-        size={32}
-        color={focused ? "#FF6C00" : "#BDBDBD"}
-      />
+        
+          tabBarIcon: ({color, size,focused }) => {
+            <Ionicons name="add" size={24} color={focused ? "white" : "#212121"} />
+        
           },
         })}
       />
@@ -107,10 +110,10 @@ export const Home = () => {
           activeTintColor: "#FF6C00",
           inactiveTintColor: "#212121",
         }}
-        options={({ navigation, route }) => ({
-          ...createPostsOptions,
+        options={({ navigation }) => ({
+          ...profileOptions,
           headerLeft: () => (
-            <AntDesign name="arrowleft" size={24} color="#fff" 
+            <AntDesign name="arrowleft" size={24} color="black" 
             onPress={() => {
               navigation.navigate('Posts');
             }}
@@ -118,17 +121,9 @@ export const Home = () => {
             style={styles.arrowLeft}
           />
         ),
-          tabBarButton: props => (
-            <TouchableOpacity
-              {...props}
-              style={{
-                ...styles.btnTab,
-                marginRight: 0,
-              }}
-            />
-          ),
-          tabBarIcon: ({ focused, color, size }) => {
-            return<Feather name="user" size={24} color="black" />;
+         
+          tabBarIcon: ({  color, size,focused }) => {
+            return<Feather name="user" size={24} color={focused ? "white" : "#212121"} />;
           },
         })}
       />
@@ -137,11 +132,7 @@ export const Home = () => {
 };
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
+ 
   arrowLeft: {
     marginLeft: 16,
     marginRight: 42,
@@ -152,35 +143,8 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginRight: 70,
-    // marginRight: 16,
-    // paddingHorizontal: 16,
-    // paddingVertical: 10,
+    
   },
-  btnTab: {
-    alignSelf: "center",
-    marginRight: 30,
-    width: 40,
-    height: 40,
-
-    paddingVertical: 8,
-    paddingHorizontal: 8,
-
-    backgroundColor: "#ffffff",
-    borderRadius: 20,
-  },
-  // btnActiveTab: {
-  //   alignSelf: 'center',
-  //   marginRight: 30,
-
-  //   width: 70,
-  //   height: 40,
-
-  //   paddingVertical: 8,
-  //   paddingHorizontal: 23,
-
-  //   backgroundColor: '#ff6c00',
-  //   borderRadius: 20,
-  // },
 });
 
 const createPostsOptions = {
@@ -201,7 +165,24 @@ const createPostsOptions = {
     textAlign: "center",
   },
 };
+const profileOptions = {
+  title: "Профіль",
+  headerStyle: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: "rgba(0, 0, 0, 0.3)",
+    boxShadow: "0px 0.5px 0px rgba(0, 0, 0, 0.3)",
+  },
+  headerTintColor: "#212121",
+  headerTitleStyle: {
+    fontFamily: "Roboto",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 17,
+    lineHeight: 22,
 
+    textAlign: "center",
+  },
+};
 const postsOptions = {
   title: "Публікації",
   headerStyle: {

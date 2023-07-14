@@ -10,9 +10,11 @@ import {
     Alert,
   } from "react-native";
   
-  import { useState } from "react";
+  import { useNavigation } from "@react-navigation/native";
   
   export function ProfileScreen() {
+
+    const navigation = useNavigation();
    
     return (
       <View style={styles.container}>
@@ -48,7 +50,7 @@ import {
             <View style={styles.textWrapper}>
                 <Text style={styles.text}>Нет публикаций</Text>
                 <TouchableOpacity
-                //   onPress={() => navigation.navigate("Создать публикацию")}
+                  onPress={() => navigation.navigate('CreatePostsScreen')}
                 >
                   <Text style={styles.aside}>Создать публикацию?</Text>
                 </TouchableOpacity>
@@ -57,11 +59,11 @@ import {
             </View>
               
               </ScrollView>
-              <View style={styles.post_user_footer}> 
+              {/* <View style={styles.post_user_footer}> 
             <Image style={styles.post_user_footer_image} source={require('../Images/grid.jpg')}/>
             <Image style={styles.post_user_footer_image} source={require('../Images/new.jpg')}/>
             <Image style={styles.post_user_footer_image}source={require('../Images/addunactive.jpg')}/>
-            </View>  
+            </View>   */}
             
         </ImageBackground>
       </View>

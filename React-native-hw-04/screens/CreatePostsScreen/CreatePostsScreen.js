@@ -80,7 +80,7 @@ export function CreatePostsScreen() {
               }}
             />
               <Image
-                style={{...styles.map,top:isFocused?"42%":"20%"}}
+                style={{...styles.map,top:isFocused?"42%":"25%"}}
                 source={require("../Images/map-pin.jpg")}
               />
            <TouchableOpacity  style={styles.btn}>
@@ -89,7 +89,7 @@ export function CreatePostsScreen() {
           </View>
           </View>
 
-          <View style={{...styles.post_user_footer,bottom:isFocused?-70:0}}>
+          <View style={{...styles.post_user_footer}}>
             <Image
               style={styles.post_user_footer_image}
               source={require("../Images/trash.jpg")}
@@ -192,14 +192,15 @@ map:{
 
   post_user_footer: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     height: 83,
     width: "100%",
     flexDirection: "row",
     paddingTop: 10,
     gap: 20,
     position: "absolute",
-    // bottom: 0,
+    bottom:-20,
+    marginLeft:"35%",
   },
   post_user_footer_image: {
     height: 40,

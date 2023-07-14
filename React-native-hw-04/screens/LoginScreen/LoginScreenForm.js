@@ -50,6 +50,7 @@ export function LoginScreen() {
 
               <TextInput
                 style={styles.input}
+                type="email"
                 placeholder="Адреса електронної пошти"
                 value={email}
                 keyboardType="email-address"
