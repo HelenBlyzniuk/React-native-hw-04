@@ -203,6 +203,9 @@ const postsOptions = {
     textAlign: "center",
   },
 };
+
+
+
 // export function Home() {
 //   const MainScreen = createStackNavigator();
 //   const navigation = useNavigation();
