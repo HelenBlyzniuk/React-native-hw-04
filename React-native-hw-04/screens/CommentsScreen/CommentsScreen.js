@@ -11,7 +11,7 @@ import {
   } from "react-native";
 
 
-export function CommentScreen() {
+export function CommentsScreen() {
     const handleOnPress = () => {
         setIsFocused(false);
         Keyboard.dismiss();

@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleSheet } from "react-native";
+import {  StyleSheet } from "react-native";
 
 import { PostsScreen } from "../PostsScreen/PostsScreen";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";

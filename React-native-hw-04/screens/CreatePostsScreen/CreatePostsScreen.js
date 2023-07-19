@@ -12,8 +12,10 @@ import {
 } from "react-native";
 
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export function CreatePostsScreen() {
+  const navigation =useNavigation()
   const [name, setName] = useState("");
   const [map, setMap] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -23,6 +25,11 @@ export function CreatePostsScreen() {
     Keyboard.dismiss();
   };
 
+  const onPostSubmit=()=>{
+    const post={name,map}
+    navigation.navigate('Posts',{params:{post}})
+
+  }
   return (
     <View style={styles.post_page_container}>
       <TouchableWithoutFeedback onPress={handleOnPress}>
@@ -83,8 +90,12 @@ export function CreatePostsScreen() {
                 style={{...styles.map,top:isFocused?"42%":"25%"}}
                 source={require("../Images/map-pin.jpg")}
               />
-           <TouchableOpacity  style={styles.btn}>
-           <Text style={styles.btn_sign_text}>Опубліковати</Text>
+           <TouchableOpacity  style={{
+            ...styles.btn,
+            backgroundColor: !name || !map ? '#f6f6f6' : '#ff6c00',
+          }} onPress={onPostSubmit}
+          >
+           <Text style={{...styles.btn_sign_text, color:!name||!map?'#BDBDBD':'#fff'}}>Опубліковати</Text>
            </TouchableOpacity>
           </View>
           </View>
@@ -220,7 +231,7 @@ map:{
     fontStyle: "normal",
   },
   btn_sign_text: {
-    color: "#BDBDBD",
+    // color: "#BDBDBD",
     fontSize: 16,
     fontFamily: "RobotoRegular",
     fontStyle: "normal",

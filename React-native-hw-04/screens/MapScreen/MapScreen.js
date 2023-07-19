@@ -1,5 +1,5 @@
 import {
-    View,
+    View,Text
   } from "react-native";
 
 export function MapScreen() {
@@ -7,7 +7,7 @@ export function MapScreen() {
   
     return (
       <View style={styles.post_page_container}>
-       
+        <Text>MapScreen</Text>
       </View>
     );
   }

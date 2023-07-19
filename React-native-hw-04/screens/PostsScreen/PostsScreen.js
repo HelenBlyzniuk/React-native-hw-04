@@ -27,19 +27,7 @@ export function PostsScreen() {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          {/* <View style={styles.post_page_header}>
-            <Text style={styles.page_title}>Публікації</Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Home");
-              }}
-            >
-              <Image
-                source={require("../Images/log-out.jpg")}
-                style={styles.logout_icon}
-              ></Image>
-            </TouchableOpacity>
-          </View> */}
+          
 
           <View style={styles.post_user_container}>
             <View style={styles.post_user_photo} />
@@ -49,20 +37,7 @@ export function PostsScreen() {
             </View>
           </View>
           <View style={styles.post_user_content}></View>
-          {/* <View style={styles.post_user_footer}>
-            <Image
-              style={styles.post_user_footer_image}
-              source={require("../Images/grid.jpg")}
-            />
-            <Image
-              style={styles.post_user_footer_image}
-              source={require("../Images/new.jpg")}
-            />
-            <Image
-              style={styles.post_user_footer_image}
-              source={require("../Images/user.jpg")}
-            />
-          </View> */}
+          
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </View>
