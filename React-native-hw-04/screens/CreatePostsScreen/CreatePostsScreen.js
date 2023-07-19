@@ -8,16 +8,21 @@ import {
   Keyboard,
   Image,
   TextInput,
+  ImageBackground,
   
 } from "react-native";
 
+
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+
+import * as DocumentPicker from 'expo-document-picker';
 
 export function CreatePostsScreen() {
   const navigation =useNavigation()
   const [name, setName] = useState("");
   const [map, setMap] = useState("");
+  const [img,setImg]=useState(null);
   const [isFocused, setIsFocused] = useState(false);
 
   const handleOnPress = () => {
@@ -25,13 +30,31 @@ export function CreatePostsScreen() {
     Keyboard.dismiss();
   };
 
+  const handleImageLoad=async()=>{
+  const img=await DocumentPicker.getDocumentAsync({
+    type:'image/*'
+  })
+  if(img.type==='cancel'){
+    return setImg(null)
+  }
+  setImg(img)
+  }
+
   const onPostSubmit=()=>{
-    const post={name,map}
+    const post={name,map,img}
     navigation.navigate('Posts',{params:{post}})
     setName('');
     setMap('');
+    setImg(null)
 
   }
+  const onTrashIconPress=()=>{
+    setName('');
+    setMap('');
+    setImg(null)
+  }
+
+ 
   return (
     <View style={styles.post_page_container}>
       <TouchableWithoutFeedback onPress={handleOnPress}>
@@ -50,14 +73,17 @@ export function CreatePostsScreen() {
           <View style={styles.post_user_container}>
            
             <View style={styles.post_user_post} >
-            
-            <View style={styles.post_user_info}>
+            {img&&<ImageBackground style={styles.post_user_info} source={img}></ImageBackground>}
+            {!img&&<View style={styles.post_user_info}>
+              <TouchableOpacity style={styles.camera} onPress={handleImageLoad}>
               <Image
                 style={styles.camera}
                 source={require("../Images/camera.jpg")}
               /> 
-            </View>
-            <Text style={styles.post_user_notification}>Завантажте фото</Text>
+              </TouchableOpacity>
+            </View>}
+            
+            <Text style={styles.post_user_notification}>{img?'Редагувати фото':'Завантажте фото'}</Text>
             </View>
            
             
@@ -94,19 +120,21 @@ export function CreatePostsScreen() {
               />
            <TouchableOpacity  style={{
             ...styles.btn,
-            backgroundColor: !name || !map ? '#f6f6f6' : '#ff6c00',
+            backgroundColor: !name || !map ||!img? '#f6f6f6' : '#ff6c00',
           }} onPress={onPostSubmit}
           >
-           <Text style={{...styles.btn_sign_text, color:!name||!map?'#BDBDBD':'#fff'}}>Опубліковати</Text>
+           <Text style={{...styles.btn_sign_text, color:!name||!map||!img?'#BDBDBD':'#fff'}}>Опубліковати</Text>
            </TouchableOpacity>
           </View>
           </View>
 
           <View style={{...styles.post_user_footer}}>
+            <TouchableOpacity onPress={onTrashIconPress}>
             <Image
               style={styles.post_user_footer_image}
               source={require("../Images/trash.jpg")}
             />
+            </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -164,8 +192,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     position: "absolute",
-    left: "44%",
-    top: "44%",
+    left: "40%",
+    top: "37%",
     borderRadius:100,
   },
   post_user_notification: {
