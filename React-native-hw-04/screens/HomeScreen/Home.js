@@ -98,6 +98,7 @@ export const Home = () => {
         
           tabBarIcon: ({color, size,focused }) => {
             <Ionicons name="add" size={24} color={focused ? "white" : "#212121"} />
+            // <Ionicons name="add-circle-sharp" size={24} color="black" />
         
           },
         })}

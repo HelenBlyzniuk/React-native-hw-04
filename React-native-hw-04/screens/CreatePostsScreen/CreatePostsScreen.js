@@ -28,6 +28,8 @@ export function CreatePostsScreen() {
   const onPostSubmit=()=>{
     const post={name,map}
     navigation.navigate('Posts',{params:{post}})
+    setName('');
+    setMap('');
 
   }
   return (
