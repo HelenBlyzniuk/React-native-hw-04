@@ -8,6 +8,8 @@ import {CommentsScreen} from "../CommentsScreen/CommentsScreen.js"
 
 const NestedStack=createStackNavigator();
 export const Home=()=>{
+
+   
     return(
         <NestedStack.Navigator>
     <NestedStack.Screen name='Home' component={HomeTab} options={{
