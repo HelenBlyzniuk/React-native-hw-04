@@ -11,12 +11,13 @@ import {
   ImageBackground,
   
 } from "react-native";
+import {Camera} from 'expo-camera';
+import * as MediaLibrary from "expo-media-library";
 
-
-import { useState} from "react";
+import { useState,useEffect} from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Camera } from "../../components/Camera";
-import * as DocumentPicker from 'expo-document-picker';
+
+// import * as DocumentPicker from 'expo-document-picker';
 
 export function CreatePostsScreen() {
   const navigation =useNavigation()
@@ -24,6 +25,42 @@ export function CreatePostsScreen() {
   const [map, setMap] = useState("");
   const [img,setImg]=useState(null);
   const [isFocused, setIsFocused] = useState(false);
+  const [cameraRef, setCameraRef] = useState(null);
+  const [location,setLocation]=useState(null);
+  const [hasPermission, setHasPermission] = useState(null);
+
+  useEffect(() => {
+    setLocation(null);
+    setImg(null);
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      await MediaLibrary.requestPermissionsAsync();
+
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  if (hasPermission === null) {
+    return <View />;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
+  const addLocation=async()=>{
+    let { status } = await Location.requestPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+      
+  }
 
 
   const handleOnPress = () => {
@@ -39,16 +76,32 @@ export function CreatePostsScreen() {
   //   return setImg(null)
   // }
   // setImg(img)
-  return <Camera/>
+  if (cameraRef) {
+    try {
+      const { uri } = await cameraRef.takePictureAsync();
+      await MediaLibrary.createAssetAsync(uri);
+      setImg(uri);
+    } catch (error) {
+      console.log('Error > ', error.message);
+    }
+  }
+  addLocation();
   }
 
   const onPostSubmit=()=>{
-    const post={name,map,img}
+    if(!name||!map||!img){
+      return console.warn('Завантажте фото та заповніть поля')
+    }
+    const post={name,map,img,location}
     navigation.navigate('Posts',{params:{post}})
     setName('');
     setMap('');
-    setImg(null)
+    setImg(null);
 
+  }
+
+  const disabled=()=>{
+    return (<View><Text>Завантажте фото та заповніть поля</Text></View>)
   }
   const onTrashIconPress=()=>{
     setName('');
@@ -69,19 +122,21 @@ export function CreatePostsScreen() {
           <View style={styles.post_user_container}>
            
             <View style={styles.post_user_post} >
-            {img&&<ImageBackground style={styles.post_user_info} source={img}></ImageBackground>}
+            {img&&<ImageBackground style={styles.post_user_info} source={img}/>}
             {!img&&<View style={styles.post_user_info}>
-              <TouchableOpacity style={styles.camera} onPress={handleImageLoad}>
+              <Camera style={styles.camera} ratio="1:1" zoom={0} type={Camera.Constants.Type.back}ref={setCameraRef}>
+              <TouchableOpacity style={styles.cameraImg} onPress={handleImageLoad}>
               <Image
-                style={styles.camera}
+                style={styles.cameraImg}
                 source={require("../Images/camera.jpg")}
               /> 
               </TouchableOpacity>
+              </Camera>
             </View>}
-            
+           
             <Text style={styles.post_user_notification}>{img?'Редагувати фото':'Завантажте фото'}</Text>
             </View>
-           
+            
             
 
           
@@ -117,9 +172,9 @@ export function CreatePostsScreen() {
            <TouchableOpacity  style={{
             ...styles.btn,
             backgroundColor: !name || !map ||!img? '#f6f6f6' : '#ff6c00',
-          }} onPress={onPostSubmit}
+          }} onPress={ !name || !map ||!img?disabled:onPostSubmit}
           >
-           <Text style={{...styles.btn_sign_text, color:!name||!map||!img?'#BDBDBD':'#fff'}}>Опубліковати</Text>
+           <Text style={{...styles.btn_sign_text, color:!name||!location||!img?'#BDBDBD':'#fff'}}>Опубліковати</Text>
            </TouchableOpacity>
           </View>
           </View>
@@ -184,7 +239,7 @@ const styles = StyleSheet.create({
     
   },
 
-  camera: {
+  cameraImg: {
     width: 40,
     height: 40,
     position: "absolute",
@@ -262,4 +317,10 @@ map:{
     fontFamily: "RobotoRegular",
     fontStyle: "normal",
   },
+  camera:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+    width: '100%',
+  }
 });

@@ -27,8 +27,6 @@ export function PostsScreen() {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          
-
           <View style={styles.post_user_container}>
             <View style={styles.post_user_photo} />
             <View style={styles.post_user_info}>
