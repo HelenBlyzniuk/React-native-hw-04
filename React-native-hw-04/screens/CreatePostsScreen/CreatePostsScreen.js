@@ -13,7 +13,7 @@ import {
 } from "react-native";
 
 
-import { useState } from "react";
+import { useState} from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import * as DocumentPicker from 'expo-document-picker';
@@ -24,6 +24,7 @@ export function CreatePostsScreen() {
   const [map, setMap] = useState("");
   const [img,setImg]=useState(null);
   const [isFocused, setIsFocused] = useState(false);
+
 
   const handleOnPress = () => {
     setIsFocused(false);
@@ -61,13 +62,7 @@ export function CreatePostsScreen() {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          {/* <View style={styles.post_page_header}>
-            <Image
-              source={require("../Images/arrow-left.jpg")}
-              style={styles.logout_icon}
-            />
-            <Text style={styles.page_title}>Створити публікацію</Text>
-          </View> */}
+          
 
 
           <View style={styles.post_user_container}>
