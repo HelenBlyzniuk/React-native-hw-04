@@ -15,15 +15,17 @@ import {Camera} from 'expo-camera';
 import * as MediaLibrary from "expo-media-library";
 
 import { useState,useEffect} from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 // import * as DocumentPicker from 'expo-document-picker';
 
 export function CreatePostsScreen() {
+
+  const onFocus=useIsFocused();
   const navigation =useNavigation()
   const [name, setName] = useState("");
   const [map, setMap] = useState("");
-  const [img,setImg]=useState(null);
+  const [img,setImg]=useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [cameraRef, setCameraRef] = useState(null);
   const [location,setLocation]=useState(null);
@@ -80,6 +82,7 @@ export function CreatePostsScreen() {
     try {
       const { uri } = await cameraRef.takePictureAsync();
       await MediaLibrary.createAssetAsync(uri);
+      console.debug(uri)
       setImg(uri);
     } catch (error) {
       console.log('Error > ', error.message);
@@ -125,9 +128,9 @@ export function CreatePostsScreen() {
             {img&&<ImageBackground style={styles.post_user_info} source={img}/>}
             {!img&&<View style={styles.post_user_info}>
               <Camera style={styles.camera} ratio="1:1" zoom={0} type={Camera.Constants.Type.back}ref={setCameraRef}>
-              <TouchableOpacity style={styles.cameraImg} onPress={handleImageLoad}>
+              <TouchableOpacity style={{...styles.cameraImg,color:img?'rgba(255, 255, 255, 0.3)':"#fff"}} onPress={handleImageLoad}>
               <Image
-                style={styles.cameraImg}
+                style={{...styles.cameraImg,color:img ? '#ffffff' : '#bdbdbd'}}
                 source={require("../Images/camera.jpg")}
               /> 
               </TouchableOpacity>

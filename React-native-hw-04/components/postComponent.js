@@ -28,7 +28,7 @@ img:{
     height:240,
     borderRadius:8,
 },
-imgtext:{
+imgText:{
     lineHeight:19,
     fontSize:16,
     color:' #212121',
@@ -50,6 +50,7 @@ mapText:{
     fontWeight:400,
     fontSize:16,
     color:' #212121',
-}
+},
+
 
 })
