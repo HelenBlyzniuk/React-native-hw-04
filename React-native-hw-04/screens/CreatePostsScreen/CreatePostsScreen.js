@@ -15,7 +15,7 @@ import {
 
 import { useState} from "react";
 import { useNavigation } from "@react-navigation/native";
-
+import { Camera } from "../../components/Camera";
 import * as DocumentPicker from 'expo-document-picker';
 
 export function CreatePostsScreen() {
@@ -32,13 +32,14 @@ export function CreatePostsScreen() {
   };
 
   const handleImageLoad=async()=>{
-  const img=await DocumentPicker.getDocumentAsync({
-    type:'image/*'
-  })
-  if(img.type==='cancel'){
-    return setImg(null)
-  }
-  setImg(img)
+  // const img=await DocumentPicker.getDocumentAsync({
+  //   type:'image/*'
+  // })
+  // if(img.type==='cancel'){
+  //   return setImg(null)
+  // }
+  // setImg(img)
+  return <Camera/>
   }
 
   const onPostSubmit=()=>{
