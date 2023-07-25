@@ -3,8 +3,6 @@ import {
   } from "react-native";
 
 export function MapScreen() {
-   
-  
     return (
       <View style={styles.container}>
         <MapView

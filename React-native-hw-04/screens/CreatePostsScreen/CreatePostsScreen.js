@@ -13,9 +13,10 @@ import {
 } from "react-native";
 import {Camera} from 'expo-camera';
 import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
 
 import { useState,useEffect} from "react";
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import {  useNavigation } from "@react-navigation/native";
 
 // import * as DocumentPicker from 'expo-document-picker';
 
@@ -44,6 +45,21 @@ export function CreatePostsScreen() {
       await MediaLibrary.requestPermissionsAsync();
 
       setHasPermission(status === "granted");
+    })();
+
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+      console.log(location)
     })();
   }, []);
 
