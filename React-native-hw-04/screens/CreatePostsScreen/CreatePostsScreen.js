@@ -21,15 +21,20 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 export function CreatePostsScreen() {
 
-  const onFocus=useIsFocused();
+
   const navigation =useNavigation()
   const [name, setName] = useState("");
   const [map, setMap] = useState("");
   const [img,setImg]=useState('');
   const [isFocused, setIsFocused] = useState(false);
+  //Camera
+  const[activeCamera,setActiveCamera]=useState(false);
   const [cameraRef, setCameraRef] = useState(null);
-  const [location,setLocation]=useState(null);
   const [hasPermission, setHasPermission] = useState(null);
+  const [type,setType]=useState(Camera.Constants.Type.back)
+ 
+  const [location,setLocation]=useState(null);
+  
 
   useEffect(() => {
     setLocation(null);
@@ -84,11 +89,14 @@ export function CreatePostsScreen() {
       await MediaLibrary.createAssetAsync(uri);
       console.debug(uri)
       setImg(uri);
+      console.log(img)
+      setActiveCamera(false)
     } catch (error) {
       console.log('Error > ', error.message);
     }
   }
-  addLocation();
+
+  // addLocation();
   }
 
   const onPostSubmit=()=>{
@@ -119,23 +127,62 @@ export function CreatePostsScreen() {
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          
+         {activeCamera&&(   <View style={styles.container}>
+     <Camera
+        style={styles.camera}
+        type={type}
+        ref={setCameraRef}
+      >
+        <View style={styles.photoView}>
+          <TouchableOpacity
+            style={styles.flipContainer}
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              );
+            }}
+          >
+            <Text style={{ fontSize: 18, marginBottom: 10, color: "white" }}>
+              {" "}
+              Flip{" "}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleImageLoad
+            //   async () => {
+            //   if (cameraRef) {
+            //     const data = await cameraRef.takePictureAsync();
+            //     setImg(data.uri)
+            //     await MediaLibrary.createAssetAsync(data.uri);
+            //     console.log(uri)
+            //   }
+            // }
+          }
+          >
+            
+          </TouchableOpacity>
+        </View>
+      </Camera>
+    </View>)}
+ 
 
-
-          <View style={styles.post_user_container}>
+         <View style={styles.post_user_container}>
            
             <View style={styles.post_user_post} >
-            {img&&<ImageBackground style={styles.post_user_info} source={img}/>}
-            {!img&&<View style={styles.post_user_info}>
-              <Camera style={styles.camera} ratio="1:1" zoom={0} type={Camera.Constants.Type.back}ref={setCameraRef}>
-              <TouchableOpacity style={{...styles.cameraImg,color:img?'rgba(255, 255, 255, 0.3)':"#fff"}} onPress={handleImageLoad}>
+            {img?(<ImageBackground style={styles.post_user_info} source={img}/>): (<View style={styles.post_user_info}>
+              
+              <TouchableOpacity style={styles.cameraImg} onPress={()=>{setActiveCamera(true)}}>
               <Image
-                style={{...styles.cameraImg,color:img ? '#ffffff' : '#bdbdbd'}}
+                style={styles.cameraImg}
                 source={require("../Images/camera.jpg")}
               /> 
               </TouchableOpacity>
-              </Camera>
-            </View>}
+              
+            </View>) }
+            
            
             <Text style={styles.post_user_notification}>{img?'Редагувати фото':'Завантажте фото'}</Text>
             </View>
@@ -181,6 +228,7 @@ export function CreatePostsScreen() {
            </TouchableOpacity>
           </View>
           </View>
+          {/* )} */}
 
           <View style={{...styles.post_user_footer}}>
             <TouchableOpacity onPress={onTrashIconPress}>
@@ -198,6 +246,41 @@ export function CreatePostsScreen() {
 
 
 const styles = StyleSheet.create({
+ 
+  camera: { flex: 1 },
+  photoView: {
+    flex: 1,
+    backgroundColor: "transparent",
+    justifyContent: "flex-end",
+
+  },
+
+  // flipContainer: {
+  //   flex: 0.1,
+  //   alignSelf: "center",
+  // },
+
+  button: { alignSelf: "center",width:40,height:40,borderRadius:100,backgroundColor:'#ffffff',marginBottom:250, },
+
+  // takePhotoOut: {
+  //   borderWidth: 2,
+  //   borderColor: "white",
+  //   height: 50,
+  //   width: 50,
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   borderRadius: 50,
+  // },
+
+  // takePhotoInner: {
+  //   borderWidth: 2,
+  //   borderColor: "white",
+  //   height: 40,
+  //   width: 40,
+  //   backgroundColor: "white",
+  //   borderRadius: 50,
+  // },
   post_page_container: {
     flex: 1,
         backgroundColor: "#fff",
@@ -321,6 +404,7 @@ map:{
     fontStyle: "normal",
   },
   camera:{
+    flex:1,
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
