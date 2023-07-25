@@ -190,7 +190,7 @@ export function CreatePostsScreen() {
          <View style={styles.post_user_container}>
            
             <View style={styles.post_user_post} >
-            {img?(<ImageBackground style={styles.post_user_info} source={img}/>): (<View style={styles.post_user_info}>
+            {img?(<ImageBackground style={styles.post_user_info} source={{uri:img}}/>): (<View style={styles.post_user_info}>
               <View style={styles.post_user_info}><Image source={img}/></View>
               <TouchableOpacity style={styles.cameraImg} onPress={()=>{setActiveCamera(true)}}>
               <Image
