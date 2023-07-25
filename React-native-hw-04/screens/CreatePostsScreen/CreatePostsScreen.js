@@ -34,6 +34,8 @@ export function CreatePostsScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type,setType]=useState(Camera.Constants.Type.back)
  
+
+  //Location
   const [location,setLocation]=useState(null);
   
 
@@ -48,7 +50,7 @@ export function CreatePostsScreen() {
     })();
 
     (async () => {
-      let { status } = await Location.requestPermissionsAsync();
+      let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         console.log("Permission to access location was denied");
       }
@@ -70,20 +72,20 @@ export function CreatePostsScreen() {
     return <Text>No access to camera</Text>;
   }
 
-  const addLocation=async()=>{
-    let { status } = await Location.requestPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-      }
+  // const addLocation=async()=>{
+  //   let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       console.log("Permission to access location was denied");
+  //     }
 
-      let location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setLocation(coords);
+  //     let location = await Location.getCurrentPositionAsync({});
+  //     const coords = {
+  //       latitude: location.coords.latitude,
+  //       longitude: location.coords.longitude,
+  //     };
+  //     setLocation(coords);
       
-  }
+  // }
 
 
   const handleOnPress = () => {
@@ -105,16 +107,16 @@ export function CreatePostsScreen() {
       await MediaLibrary.createAssetAsync(uri);
       console.debug(uri)
       setImg(uri);
-      console.log(img)
+     
       setActiveCamera(false)
     } catch (error) {
       console.log('Error > ', error.message);
     }
   }
 
-  // addLocation();
+  
   }
-
+  console.log(img);
   const onPostSubmit=()=>{
     if(!name||!map||!img){
       return console.warn('Завантажте фото та заповніть поля')
@@ -189,7 +191,7 @@ export function CreatePostsScreen() {
            
             <View style={styles.post_user_post} >
             {img?(<ImageBackground style={styles.post_user_info} source={img}/>): (<View style={styles.post_user_info}>
-              
+              <View style={styles.post_user_info}><Image source={img}/></View>
               <TouchableOpacity style={styles.cameraImg} onPress={()=>{setActiveCamera(true)}}>
               <Image
                 style={styles.cameraImg}
