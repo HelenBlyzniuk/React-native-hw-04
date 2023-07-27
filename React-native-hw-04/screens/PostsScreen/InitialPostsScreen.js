@@ -11,23 +11,27 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-// import { PostComponent } from "../../components/PostComponent.js";
+import { PostComponent } from "../Components/PostComponent";
+
 
 export function InitialPostsScreen() {
-  // const { params } = useRoute();
-  // console.log(route.params);
+  const { params } = useRoute();
 
-  // const [post, setPost] = useState([]);
+
+  const [post, setPost] = useState([ {img: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540lenablyzniuk%252FReact-native-hw-04/Camera/e52a6693-95b2-4083-9697-12c44fecb0c0.jpg",
+   location: {latitude: 37.4220936, longitude: -122.083922},map: "Ukraine", postName: "Forest"}]);
   const [isFocused, setIsFocused] = useState(false);
 
-  // useEffect(() => {
-  //   if (!params) {
-  //     return;
-  //   }
-  //   setPost((prev) => [...prev, params]);
-  // }, [params]);
+  useEffect(() => {
+    if (!params) {
+      return;
+    }
+    setPost((prev) => [...prev, params]);
+  }, [params]);
+  
+  console.log(params);
 
-  console.log(post)
+  
   const handleOnPress = () => {
     setIsFocused(false);
     Keyboard.dismiss();
@@ -47,7 +51,7 @@ export function InitialPostsScreen() {
             </View>
           </View>
           <View style={styles.post_user_content}></View>
-          {/* <FlatList
+          <FlatList
             style={styles.post_user_content}
             data={post}
             renderItem={({ item }) => (
@@ -58,7 +62,7 @@ export function InitialPostsScreen() {
                 location={item.location}
               />
             )}
-          /> */}
+          />
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </View>

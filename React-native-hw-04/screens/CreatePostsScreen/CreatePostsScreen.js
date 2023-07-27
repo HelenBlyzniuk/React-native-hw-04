@@ -119,8 +119,9 @@ export function CreatePostsScreen() {
     if (!postName || !map || !img) {
       return console.warn("Завантажте фото та заповніть поля");
     }
-    const post = { postName, map, img, location };
-    navigation.navigate("Posts", { params: { post } });
+    const userPost = { postName:postName, map:map, img:img, location:location };
+    console.log(post)
+    navigation.navigate("Posts",{ screen: 'InitialPostsScreen',params: { userPost} });
     setPostName("");
     setMap("");
     setImg(null);
