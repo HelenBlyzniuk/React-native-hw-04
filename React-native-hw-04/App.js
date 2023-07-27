@@ -6,7 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { RegistrationScreen } from "./screens/RegistrationScreen";
 import { LoginScreen } from "./screens/LoginScreen/LoginScreenForm";
 
-import { Home } from "./screens/HomeScreen/Home";
+import { HomeTab } from "./screens/HomeScreen/HomeTab.js";
 
 
 
@@ -42,7 +42,7 @@ export default function App() {
         <MainStack.Screen name="Login" component={LoginScreen}  screenOptions={{
           headerShown: false,
         }}/>
-        <MainStack.Screen name="Home" component={Home} screenOptions={{
+        <MainStack.Screen name="Home" component={HomeTab} screenOptions={{
           headerShown: false,
         }}/>
       </MainStack.Navigator>
