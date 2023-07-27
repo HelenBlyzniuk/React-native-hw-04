@@ -5,17 +5,29 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  FlatList,
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-
-// import { useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import { PostComponent } from "../../components/postComponent.js";
 
 export function InitialPostsScreen() {
-  const navigation = useNavigation();
+  const { params } = useRoute();
+  // console.log(route.params);
+
+  const [post, setPost] = useState([ ]);
   const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    if (!params) {
+      return;
+    }
+    setPost((prev) => [...prev, params]);
+  }, [params]);
+
+  console.log(post)
   const handleOnPress = () => {
     setIsFocused(false);
     Keyboard.dismiss();
@@ -34,8 +46,18 @@ export function InitialPostsScreen() {
               <Text style={styles.post_user_email}>Email</Text>
             </View>
           </View>
-          <View style={styles.post_user_content}></View>
-          
+          {/* <FlatList
+            style={styles.post_user_content}
+            data={post}
+            renderItem={({ item }) => (
+              <PostComponent
+                name={item.postName}
+                map={item.map}
+                img={item.img}
+                location={item.location}
+              />
+            )}
+          /> */}
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     </View>
@@ -45,10 +67,10 @@ const styles = StyleSheet.create({
   post_page_container: {
     padding: 16,
     flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-      minWidth:"100%",
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    minWidth: "100%",
   },
   page_title: {
     fontFamily: "RobotoMedium",
@@ -80,8 +102,8 @@ const styles = StyleSheet.create({
     margin: 0,
     gap: 10,
     paddingTop: 30,
-    justifyContent:'flex-start',
-    minWidth:340,
+    justifyContent: "flex-start",
+    minWidth: 340,
   },
   post_user_photo: {
     height: 60,

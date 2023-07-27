@@ -3,7 +3,7 @@ import { View,Text,Image ,StyleSheet} from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
 export function PostComponent({name,map,img,location}){
-    const navigation=useNavigation();
+   const navigation=useNavigation();
     return(
         <View>
             <Image style={styles.img} source={{uri:img}}/>

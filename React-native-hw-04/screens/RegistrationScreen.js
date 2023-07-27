@@ -12,8 +12,10 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-
 import { useState } from "react";
+import * as DocumentPicker from 'expo-document-picker';
+
+
 
 export function RegistrationScreen() {
 
@@ -23,6 +25,7 @@ export function RegistrationScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login,setLogin]=useState('');
+  const[avatar,setAvatar]=useState(null);
   const [shouldShow,setShouldShow]=useState(false);
 
   const handleSubmit=()=>{
@@ -30,12 +33,22 @@ export function RegistrationScreen() {
       Alert.alert('Заповніть всі поля!!!');
      
     }
-    // registerInfo({login,email,password});
-    navigation.navigate('Home',{login,email,password})
+
+    navigation.navigate('Home',{login,email,password,avatar})
     setLogin('');
     setEmail("");
     setPassword("");
   }
+
+  const onLoadAvatar=async()=>{
+    const img=await DocumentPicker.getDocumentAsync({
+        type:'image/*'
+      })
+      if(img.type==='cancel'){
+        return setAvatar(null)
+      }
+      setAvatar(img)
+}
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -61,12 +74,17 @@ export function RegistrationScreen() {
                     top: isFocused ? "-5%" : "-15%",
                   }}
                 >
+                  {avatar&&<Image style={styles.avatar}source={avatar}/>}
                   <View style={styles.iconBtn}>
-                    <TouchableOpacity>
-                      <Image
+                    <TouchableOpacity onPress={onLoadAvatar}>
+                      {!avatar?(<Image
                         style={styles.icon}
                         source={require("./Images/add.jpg")}
-                      />
+                      />):( <Image
+                        style={styles.icon}
+                        source={require("./Images/delete.jpg")}
+                      />)
+                      }
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -227,4 +245,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     borderRadius: 16,
   },
+  avatar:{
+    width: 120,
+    height: 120,
+  }
 });

@@ -18,13 +18,7 @@ export default function App() {
     RobotoRegular: require("./screens/fonts/Roboto-Regular.ttf"),
     RobotoMedium: require("./screens/fonts/Roboto-Medium.ttf"),
   });
-  // const loginInfo=(info)=>{
-  //   console.debug(info)
-  // }
 
-  // const registerInfo=(info)=>{
-  //   console.debug(info);
-  // }
   return (
     
     <NavigationContainer>
