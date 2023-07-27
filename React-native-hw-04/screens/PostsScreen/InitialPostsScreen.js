@@ -15,10 +15,10 @@ import { PostComponent } from "../Components/PostComponent";
 
 
 export function InitialPostsScreen() {
-  const { params } = useRoute();
+  const { params} = useRoute();
+  console.log(params)
 
-
-  const [post, setPost] = useState([ {img: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540lenablyzniuk%252FReact-native-hw-04/Camera/e52a6693-95b2-4083-9697-12c44fecb0c0.jpg",
+  const [posts, setPosts] = useState([ {img: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540lenablyzniuk%252FReact-native-hw-04/Camera/e52a6693-95b2-4083-9697-12c44fecb0c0.jpg",
    location: {latitude: 37.4220936, longitude: -122.083922},map: "Ukraine", postName: "Forest"}]);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -26,10 +26,12 @@ export function InitialPostsScreen() {
     if (!params) {
       return;
     }
-    setPost((prev) => [...prev, params]);
+    const newPost=params.params;
+    console.log("params in useEfeect",params.params)
+    setPosts((prev) => [...prev, newPost]);
   }, [params]);
   
-  console.log(params);
+  console.log("posts after useEfeectt",posts);
 
   
   const handleOnPress = () => {
@@ -50,10 +52,10 @@ export function InitialPostsScreen() {
               <Text style={styles.post_user_email}>Email</Text>
             </View>
           </View>
-          <View style={styles.post_user_content}></View>
+         
           <FlatList
             style={styles.post_user_content}
-            data={post}
+            data={posts}
             renderItem={({ item }) => (
               <PostComponent
                 name={item.postName}
@@ -102,12 +104,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   post_user_container: {
-    flex: 1,
+    // flex: 1,
     flexDirection: "row",
-    margin: 0,
+    marginTop: 40,
     gap: 10,
     paddingTop: 30,
-    justifyContent: "flex-start",
+    // justifyContent: "flex-start",
     minWidth: 340,
   },
   post_user_photo: {
