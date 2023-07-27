@@ -17,7 +17,7 @@ export function InitialPostsScreen() {
   const { params } = useRoute();
   // console.log(route.params);
 
-  const [post, setPost] = useState([ ]);
+  const [post, setPost] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
