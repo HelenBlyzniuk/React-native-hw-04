@@ -269,7 +269,7 @@ export function CreatePostsScreen() {
 }
 
 const styles = StyleSheet.create({
-  camera: { flex: 1 },
+  camera: { flex: 1, },
   photoView: {
     flex: 1,
     backgroundColor: "transparent",

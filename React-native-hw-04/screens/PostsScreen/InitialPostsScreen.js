@@ -11,21 +11,21 @@ import {
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { PostComponent } from "../../components/postComponent.js";
+// import { PostComponent } from "../../components/PostComponent.js";
 
 export function InitialPostsScreen() {
-  const { params } = useRoute();
+  // const { params } = useRoute();
   // console.log(route.params);
 
-  const [post, setPost] = useState([]);
+  // const [post, setPost] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
 
-  useEffect(() => {
-    if (!params) {
-      return;
-    }
-    setPost((prev) => [...prev, params]);
-  }, [params]);
+  // useEffect(() => {
+  //   if (!params) {
+  //     return;
+  //   }
+  //   setPost((prev) => [...prev, params]);
+  // }, [params]);
 
   console.log(post)
   const handleOnPress = () => {
@@ -46,6 +46,7 @@ export function InitialPostsScreen() {
               <Text style={styles.post_user_email}>Email</Text>
             </View>
           </View>
+          <View style={styles.post_user_content}></View>
           {/* <FlatList
             style={styles.post_user_content}
             data={post}

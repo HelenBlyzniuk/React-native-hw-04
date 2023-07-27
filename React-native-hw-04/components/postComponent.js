@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native"
 import { View,Text,Image ,StyleSheet} from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
-export function PostComponent({name,map,img,location}){
+export const PostComponent=({name,map,img,location})=>{
    const navigation=useNavigation();
     return(
         <View style={styles.postItem}>
@@ -23,7 +23,7 @@ export function PostComponent({name,map,img,location}){
 }
 
 const styles=StyleSheet.create({
-    postItem: {
+postItem: {
         marginBottom: 32,
       },
 img:{
@@ -39,7 +39,7 @@ imgText:{
     
 },
 decorContainer:{
-    display:flex,
+    flex:1,
     justifyContent: 'space-between',
     flexDirection:'row',
 
