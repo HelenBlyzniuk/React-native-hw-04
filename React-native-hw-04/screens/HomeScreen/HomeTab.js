@@ -95,11 +95,12 @@ export const HomeTab = () => {
               style={styles.arrowLeft}
             />
           ),
-        
+          
+          
           tabBarIcon: ({color, size,focused }) => {
+           return(  <Ionicons name="add" size={24} color={focused ? "white" : "#212121"} />)
            
-            // <Ionicons name="add" size={24} color={focused ? "white" : "#212121"} />
-            <Ionicons name="add-circle-sharp" size={24} color="black" />
+            
         
           },
         })}
