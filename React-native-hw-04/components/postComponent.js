@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler"
 export function PostComponent({name,map,img,location}){
    const navigation=useNavigation();
     return(
-        <View>
+        <View style={styles.postItem}>
             <Image style={styles.img} source={{uri:img}}/>
             <Text style={styles.imgText}>{name}</Text>
             <View style={styles.decorContainer}>
@@ -23,6 +23,9 @@ export function PostComponent({name,map,img,location}){
 }
 
 const styles=StyleSheet.create({
+    postItem: {
+        marginBottom: 32,
+      },
 img:{
     maxWidth:340,
     height:240,
