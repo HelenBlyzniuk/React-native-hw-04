@@ -56,11 +56,7 @@ export function CreatePostsScreen() {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       };
-      // const [address] = await Location.reverseGeocodeAsync({
-      //   latitude: location.coords.latitude,
-      //   longitude: location.coords.longitude,
-      // });
-      // setAddress(address.city);
+     
       setLocation(coords);
       console.log(location.coords);
     })();
@@ -73,20 +69,7 @@ export function CreatePostsScreen() {
     return <Text>No access to camera</Text>;
   }
 
-  // const addLocation=async()=>{
-  //   let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== "granted") {
-  //       console.log("Permission to access location was denied");
-  //     }
-
-  //     let location = await Location.getCurrentPositionAsync({});
-  //     const coords = {
-  //       latitude: location.coords.latitude,
-  //       longitude: location.coords.longitude,
-  //     };
-  //     setLocation(coords);
-
-  // }
+ 
 
   const handleOnPress = () => {
     setIsFocused(false);

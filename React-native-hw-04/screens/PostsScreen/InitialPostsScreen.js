@@ -9,7 +9,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {  useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { PostComponent } from "../Components/PostComponent";
 
