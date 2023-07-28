@@ -40,7 +40,7 @@ imgText:{
 },
 decorContainer:{
     flex:1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     flexDirection:'row',
 
 },

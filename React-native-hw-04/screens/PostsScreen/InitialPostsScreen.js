@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   post_user_container: {
     // flex: 1,
     flexDirection: "row",
-    marginTop: 40,
+    marginTop: 0,
     gap: 10,
     paddingTop: 30,
     // justifyContent: "flex-start",
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
   },
   post_user_content: {
     flex: 1,
+    marginTop:20,
   },
   post_user_footer: {
     flex: 1,

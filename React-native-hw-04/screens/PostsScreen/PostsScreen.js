@@ -11,9 +11,7 @@ export const PostsScreen=()=>{
             <NestedStack.Screen name='InitialPosts' component={InitialPostsScreen} options={{
           headerShown: false,
         }}/>
-         <NestedStack.Screen name='Map' component={MapScreen}options={{
-          headerShown: false,
-        }}/>
+         <NestedStack.Screen name='Map' component={MapScreen} screenOptions={{ headerShown: false }}/>
         <NestedStack.Screen name='Comments' component={CommentsScreen} options={{
           headerShown: false,
         }}/>
