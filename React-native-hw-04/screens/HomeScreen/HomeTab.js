@@ -17,6 +17,7 @@ export const HomeTab = () => {
   const navigation = useNavigation();
   return (
     <BottomTabs.Navigator
+    id='home'
       screenOptions={() => ({
         tabBarShowLabel: false,
         tabBarShowIcon: true,
@@ -85,6 +86,7 @@ export const HomeTab = () => {
           inactiveTintColor: "#212121",
         }}
         options={({ navigation }) => ({
+          tabBarStyle: { display: 'none' },
           ...createPostsOptions,
           headerLeft: () => (
             <AntDesign name="arrowleft" size={24} color="black" 
