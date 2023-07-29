@@ -9,7 +9,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import {  useRoute } from "@react-navigation/native";
+import {  useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { PostComponent } from "../Components/PostComponent";
 
@@ -20,7 +20,9 @@ export function InitialPostsScreen() {
 
   const [posts, setPosts] = useState([ {img: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540lenablyzniuk%252FReact-native-hw-04/Camera/e52a6693-95b2-4083-9697-12c44fecb0c0.jpg",
    location: {latitude: 37.4220936, longitude: -122.083922},map: "Ukraine", postName: "Forest"}]);
-  const [isFocused, setIsFocused] = useState(false);
+  const [isKeyFocused, setIsKeyFocused] = useState(false);
+  const isFocused=useIsFocused();
+  const navigation=useNavigation();
 
   useEffect(() => {
     if (!params) {
@@ -31,11 +33,18 @@ export function InitialPostsScreen() {
     setPosts((prev) => [...prev, newPost]);
   }, [params]);
   
-  console.log("posts after useEfeectt",posts);
+  useEffect(() => {
+    if (isFocused) {
+      navigation?.getParent("home")?.setOptions({
+       
+        headerShown: false,
+      });
+    }
+  }, []);
 
   
   const handleOnPress = () => {
-    setIsFocused(false);
+    setIsKeyFocused(false);
     Keyboard.dismiss();
   };
 

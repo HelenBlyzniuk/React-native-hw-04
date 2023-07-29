@@ -1,11 +1,31 @@
+import { View, StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import {
-    View,StyleSheet
-  } from "react-native";
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { useEffect } from "react";
 
 export function MapScreen() {
-    return (
-      <View style={styles.container}>
-        <MapView
+  const { params } = useRoute();
+  console.log(params);
+  const isFocused = useIsFocused();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    if (isFocused) {
+      navigation?.getParent("home")?.setOptions({
+        tabBarStyle: { display: "none" },
+        headerShown: false,
+      });
+    }
+  }, []);
+
+  return (
+    <View style={styles.container}>
+      <MapView
         style={styles.mapStyle}
         region={{
           latitude: 37.78825,
@@ -21,23 +41,22 @@ export function MapScreen() {
         <Marker
           title="I am here"
           coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
-          description='Hello'
+          description="Hello"
         />
       </MapView>
-      </View>
-    );
-  }
-  
+    </View>
+  );
+}
 
-  const styles=StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    // mapStyle: {
-    //   width: Dimensions.get("window").width,
-    //   height: Dimensions.get("window").height,
-    // },
-  })
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mapStyle: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+  },
+});
