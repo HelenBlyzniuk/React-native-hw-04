@@ -3,12 +3,14 @@ import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Provider } from "react-redux";
 import { RegistrationScreen } from "./screens/RegistrationScreen";
 import { LoginScreen } from "./screens/LoginScreen/LoginScreenForm";
 
 import { HomeTab } from "./screens/HomeScreen/HomeTab.js";
 
-
+import {store,persistor} from './redux/redux-storage.js';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const MainStack = createStackNavigator();
 
@@ -20,7 +22,8 @@ export default function App() {
   });
 
   return (
-    
+    <Provider store={store}>
+    <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
     <NavigationContainer>
       <MainStack.Navigator
         initialRouteName="Registration"
@@ -42,6 +45,8 @@ export default function App() {
       </MainStack.Navigator>
      
     </NavigationContainer>
+    </PersistGate>
+    </Provider>
   );
 }
 
