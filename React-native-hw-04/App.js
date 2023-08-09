@@ -11,6 +11,7 @@ import { HomeTab } from "./screens/HomeScreen/HomeTab.js";
 
 import {store,persistor} from './redux/redux-storage.js';
 import { PersistGate } from 'redux-persist/integration/react';
+import {Text} from 'react-native'
 
 const MainStack = createStackNavigator();
 

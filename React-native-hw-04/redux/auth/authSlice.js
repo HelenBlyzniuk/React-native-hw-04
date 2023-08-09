@@ -6,6 +6,7 @@ const authInitialState={
     login:null,
     userImg:null,
     userId:null,
+    comments:null,
 
 }
 
@@ -21,8 +22,11 @@ export const authSlice=createSlice({
             userId:payload.id,
         }),
         authLogOut:()=>(authInitialState),
+        addComment: (state, { payload }) => ({
+            comment: payload,
+          }),
     }
 })
 
-export const {createUserProfile,authLogOut}=authSlice.actions;
+export const {createUserProfile,authLogOut,addComment}=authSlice.actions;
 export const authReducer=authSlice.reducer;

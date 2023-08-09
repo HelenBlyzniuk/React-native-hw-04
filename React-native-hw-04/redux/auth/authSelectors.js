@@ -1,5 +1,6 @@
 export const selectEmail=state=>state.auth.email;
 export const selectLogin=state=>state.auth.login;
-export const selectUserImg=state.auth.userImg;
-export const selectUserId=state.auth.userId;
+export const selectUserImg=state=>state.auth.userImg;
+export const selectUserId=state=>state.auth.userId;
+export const selectComment=state=>state.auth.comments;
 

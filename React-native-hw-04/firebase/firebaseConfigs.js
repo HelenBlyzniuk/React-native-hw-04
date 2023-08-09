@@ -1,23 +1,35 @@
 
-import { initializeApp } from 'firebase/app';
+
+import { initializeApp } from "firebase/app";
+
 import { getAuth } from "firebase/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getReactNativePersistence, initializeAuth } from 'firebase/auth/react-native';
+// Функція для підключення бази даних у проект
 import { getFirestore } from "firebase/firestore";
+// Функція для підключення сховища файлів в проект
 import { getStorage } from "firebase/storage";
+import 'firebase/compat/auth';
+import { getAuth } from 'firebase/auth';
+import 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: '606cb0045cb7a535b4947e0814505a56d37417e1',
-    authDomain: 'react-native-57242.firebaseapp.com',
-    databaseURL: 'https://react-native-57242.firebaseio.com',
-    projectId: 'react-native-57242',
-    storageBucket: 'react-native-57242.appspot.com',
-    messagingSenderId: 'sender-id',
-    appId: 'app-id',
-    measurementId: 'G-measurement-id',
-  };
-  
+  apiKey: "AIzaSyBVZLg8BSLSvv3BXlgKuAjPnLioR3iXzVw",
+  authDomain: "react-native-57242.firebaseapp.com",
+  projectId: "react-native-57242",
+  storageBucket: "react-native-57242.appspot.com",
+  messagingSenderId: "147926370865",
+  appId: "1:147926370865:web:2a89b17107b9c2e0502310",
+  measurementId: "G-Y5VJS4T4R7"
+};
 
-  сonst app = initializeApp(firebaseConfig);
+
+export const app = initializeApp(firebaseConfig);
+
+initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const storage = getStorage(app);
+export const myStorage = getStorage(app);

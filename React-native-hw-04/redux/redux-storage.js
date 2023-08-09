@@ -10,9 +10,9 @@ import {
   REGISTER,
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import rootReducer from './rootReducer';
+
 import { authSlice } from './auth/authSlice';
-import { postSlice } from './posts/postSlice';
+
 
 
 const persistConfig = {
@@ -21,11 +21,8 @@ const persistConfig = {
   whitelist: ['accessToken'],
 };
 
-const rootReducer = CombineReducers({
-    [authSlice.name]:persistReducer(persistConfig(authSlice.reducer)),
-    [postSlice.name]:postSlice.reducer,
-})
 
+const reducer = persistReducer(persistConfig, authSlice.reducer);
 
 const store = configureStore({
   reducer,
