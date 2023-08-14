@@ -47,13 +47,20 @@ export function RegistrationScreen() {
    
       try {
         const data=await createUserWithEmailAndPassword(auth, email, password);
-        console.log(data)
-        const user=auth.currentUser;
-        console.log("user", user)
-      //   await updateProfile(user, {
-      //   displayName: login,
-      //   avatar: avatar,
-      // });
+        
+        const user=await auth.currentUser;
+        // console.log("user", user)
+        
+        await updateProfile(user,{
+          displayName: login,
+          photoURL: photo,
+        });
+        
+
+        const {uid,displayName,photoURL}=await auth.currentUser;
+        console.log("user",displayName)
+       
+     
       } catch (error) {
         console.log(error) ;
         alert("sign up failed");
