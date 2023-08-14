@@ -7,7 +7,7 @@ import {
   getAuth
 } from "firebase/auth";
 
-// import { auth } from "../../firebase/firebaseConfigs";
+import { auth } from "../../firebase/firebaseConfigs";
 import { createUserProfile, authLogOut, authStateChange } from "./authSlice";
 // import { auth } from "../../firebase/firebaseConfigs.js";
 

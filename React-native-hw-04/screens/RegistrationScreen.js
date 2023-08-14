@@ -11,21 +11,23 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import {getAuth} from 'firebase/auth';
+// import {getAuth} from 'firebase/auth';
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 // import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch } from "react-redux";
 import { registerDB,authStateChange } from "../redux/auth/operations";
-import { db } from "../firebase/firebaseConfigs";
+import { auth,storage } from "../firebase/firebaseConfigs";
+import { createUserWithEmailAndPassword ,updateProfile,getDownloadURL} from "firebase/auth";
 
-const auth=getAuth(db)
+
 
 export function RegistrationScreen() {
   
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  
 
   const [isFocused, setIsFocused] = useState(false);
   const [email, setEmail] = useState("");
@@ -39,17 +41,24 @@ export function RegistrationScreen() {
       Alert.alert("Заповніть всі поля!!!");
     }
 
-    // const photo = avatar
-    //   ? await uploadImageToServer(avatar, "avatars")
-    //   : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png";
-    const registerDB = async ({ email, password }) => {
+    const photo = avatar
+      ? await uploadImageToServer()
+      : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png";
+   
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const data=await createUserWithEmailAndPassword(auth, email, password);
+        console.log(data)
+        const user=auth.currentUser;
+        console.log("user", user)
+      //   await updateProfile(user, {
+      //   displayName: login,
+      //   avatar: avatar,
+      // });
       } catch (error) {
-        throw error;
+        console.log(error) ;
+        alert("sign up failed");
       }
-    };
-   await registerDB({email,password})
+   
 
     // dispatch(registerDB(login, email, password, avatar)).then((data) => {
     //   console.log(data)
@@ -62,10 +71,10 @@ export function RegistrationScreen() {
     // });
 
 
-    navigation.navigate("Home", { login, email, password, avatar });
-    setLogin("");
-    setEmail("");
-    setPassword("");
+    // navigation.navigate("Home", { login, email, password, avatar });
+    // setLogin("");
+    // setEmail("");
+    // setPassword("");
   };
 
   const onLoadAvatar = async () => {
@@ -73,30 +82,35 @@ export function RegistrationScreen() {
       setAvatar(null);
       return;
     }
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      alert("Sorry, we need camera roll permissions to make this work!");
+      return;
+    }
+   const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 4],
       quality: 1,
     });
 
-    if (!result.canceled) {
-      setAvatar(result.assets[0].uri);
+    if (!result.assets.length>0) {
+      setAvatar(result.assets[0]);
     }
   };
 
-  const uploadImageToServer = async (imageUri, prefixFolder) => {
-    const uniquePostId = Date.now().toString();
+  const uploadImageToServer = async () => {
+   
 
-    if (imageUri) {
+    if (avatar) {
       try {
-        const response = await fetch(imageUri);
+        const response = await fetch(avatar.uri);
 
         const file = await response.blob();
-
+        const uniquePostId=Date.now().toString()
         const imageRef = await ref(
-          myStorage,
-          `${prefixFolder}/${uniquePostId}`
+          storage,
+          `profileAvatar/${uniquePostId}/${file.data.name}`
         );
 
         await uploadBytes(imageRef, file);
