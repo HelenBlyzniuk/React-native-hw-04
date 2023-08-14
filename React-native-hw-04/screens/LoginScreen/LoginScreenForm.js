@@ -10,16 +10,15 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../redux/auth/operations.js";
 
 export function LoginScreen() {
-
   const navigation = useNavigation();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const [isFocused, setIsFocused] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,18 +31,15 @@ export function LoginScreen() {
       Alert.alert("Заповніть всі поля!!!");
     }
 
+    dispatch(loginUser(email, password));
+    navigation.navigate("Home", { email, password });
 
-    
-    dispatch(loginUser(email,password))
-    navigation.navigate('Home',{email,password})
-    
     setEmail("");
     setPassword("");
-   
   };
 
   return (
-    <View  style={styles.container}>
+    <View style={styles.container}>
       <ImageBackground
         style={styles.image}
         source={require("../Images/photoBG.png")}
@@ -89,17 +85,17 @@ export function LoginScreen() {
                 <TouchableOpacity
                   style={styles.btn_sign}
                   onPress={handleSubmit}
-                  
                 >
                   <Text style={styles.btn_sign_text}>Увійти</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigation.navigate("Registration")}>
-                <Text style={styles.sentence}>
-                  Немає акаунту? Зареєструватися
-                </Text>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Registration")}
+                >
+                  <Text style={styles.sentence}>
+                    Немає акаунту? Зареєструватися
+                  </Text>
                 </TouchableOpacity>
-
               </View>
             </View>
           </KeyboardAvoidingView>
@@ -110,12 +106,12 @@ export function LoginScreen() {
 }
 const styles = StyleSheet.create({
   container: {
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingTop: 20,
-      },
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 20,
+  },
   title: {
     fontFamily: "RobotoMedium",
     fontSize: 30,

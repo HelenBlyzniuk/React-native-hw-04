@@ -4,49 +4,51 @@ import {
   onAuthStateChanged,
   updateProfile,
   signOut,
+  getAuth
 } from "firebase/auth";
 
 // import { auth } from "../../firebase/firebaseConfigs";
 import { createUserProfile, authLogOut, authStateChange } from "./authSlice";
-import { auth } from "../../firebase/firebaseConfigs";
+// import { auth } from "../../firebase/firebaseConfigs.js";
 
 export const registerDB = async ({ login, email, password, avatar }) => {
   async (dispatch, state) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      await updateProfile(user, {
-        displayName: login,
-        avatar: avatar,
-      });
-      const {
-        uid,
-        displayName,
-        email: emailBase,
-        avatar: photoUrlBase,
-      } = auth.currentUser;
-      const userProfile = {
-        userId: uid,
-        login: displayName,
-        email: emailBase,
-        avatar: photoUrlBase,
-      };
-      dispatch(createUserProfile(userProfile));
+      console.log(user)
+      // await updateProfile(user, {
+      //   displayName: login,
+      //   avatar: avatar,
+      // });
+      // const {
+      //   uid,
+      //   displayName,
+      //   email: emailBase,
+      //   avatar: photoUrlBase,
+      // } = auth.currentUser;
+      // const userProfile = {
+      //   userId: uid,
+      //   login: displayName,
+      //   email: emailBase,
+      //   avatar: photoUrlBase,
+      // };
+      // dispatch(createUserProfile(userProfile));
     } catch (error) {
       return error.code;
     }
   };
 };
 
-export const loginUser =
-  ({ email, password }) =>
-  async (dispatch, state) => {
-    try {
-      return await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      return error.code;
-    }
-  };
+// export const loginUser =
+//   ({ email, password }) =>
+//   async (dispatch, state) => {
+//     try {
+//       return await signInWithEmailAndPassword(auth, email, password);
+//     } catch (error) {
+//       return error.code;
+//     }
+//   };
 
 // export const updateUser =
 //   ({ avatarURL }) =>

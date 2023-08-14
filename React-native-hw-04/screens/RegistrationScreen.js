@@ -11,14 +11,19 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
+import {getAuth} from 'firebase/auth';
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 // import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch } from "react-redux";
 import { registerDB,authStateChange } from "../redux/auth/operations";
+import { db } from "../firebase/firebaseConfigs";
+
+const auth=getAuth(db)
 
 export function RegistrationScreen() {
+  
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -34,18 +39,27 @@ export function RegistrationScreen() {
       Alert.alert("Заповніть всі поля!!!");
     }
 
-    const photo = avatar
-      ? await uploadImageToServer(avatar, "avatars")
-      : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png";
-
-    dispatch(registerDB(login, email, password, avatar)).then((data) => {
-      if (data === undefined || !data.uid) {
-        alert(`Реєстрацію не виконано!`);
-        return;
+    // const photo = avatar
+    //   ? await uploadImageToServer(avatar, "avatars")
+    //   : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png";
+    const registerDB = async ({ email, password }) => {
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        throw error;
       }
+    };
+   await registerDB({email,password})
 
-      dispatch(authStateChange({ stateChange: true }));
-    });
+    // dispatch(registerDB(login, email, password, avatar)).then((data) => {
+    //   console.log(data)
+    //   if (data === undefined || !data.uid) {
+    //     alert(`Реєстрацію не виконано!`);
+    //     return;
+    //   }
+
+    //   dispatch(authStateChange({ stateChange: true }));
+    // });
 
 
     navigation.navigate("Home", { login, email, password, avatar });
