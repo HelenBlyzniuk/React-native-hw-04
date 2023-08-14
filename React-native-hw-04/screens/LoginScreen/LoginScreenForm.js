@@ -13,10 +13,13 @@ import {
 import { useNavigation } from '@react-navigation/native';
 
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../redux/auth/operations.js";
 
 export function LoginScreen() {
 
   const navigation = useNavigation();
+  const dispatch=useDispatch();
   const [isFocused, setIsFocused] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,8 +31,12 @@ export function LoginScreen() {
     if (email.trim() === "" || password.trim() === "") {
       Alert.alert("Заповніть всі поля!!!");
     }
+
+
+    
+    dispatch(loginUser(email,password))
     navigation.navigate('Home',{email,password})
-    // logininfo({ email, password });
+    
     setEmail("");
     setPassword("");
    

@@ -11,44 +11,91 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import * as DocumentPicker from 'expo-document-picker';
-
-
+// import * as DocumentPicker from "expo-document-picker";
+import * as ImagePicker from "expo-image-picker";
+import { useDispatch } from "react-redux";
+import { registerDB,authStateChange } from "../redux/auth/operations";
 
 export function RegistrationScreen() {
-
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const [isFocused, setIsFocused] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login,setLogin]=useState('');
-  const[avatar,setAvatar]=useState(null);
-  const [shouldShow,setShouldShow]=useState(false);
+  const [login, setLogin] = useState("");
+  const [avatar, setAvatar] = useState(null);
+  const [shouldShow, setShouldShow] = useState(false);
 
-  const handleSubmit=()=>{
-    if(email.trim()===''||password.trim()===''||login.trim()===''){
-      Alert.alert('Заповніть всі поля!!!');
-     
+  const handleSubmit = async () => {
+    if (email.trim() === "" || password.trim() === "" || login.trim() === "") {
+      Alert.alert("Заповніть всі поля!!!");
     }
 
-    navigation.navigate('Home',{login,email,password,avatar})
-    setLogin('');
+    const photo = avatar
+      ? await uploadImageToServer(avatar, "avatars")
+      : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png";
+
+    dispatch(registerDB(login, email, password, avatar)).then((data) => {
+      if (data === undefined || !data.uid) {
+        alert(`Реєстрацію не виконано!`);
+        return;
+      }
+
+      dispatch(authStateChange({ stateChange: true }));
+    });
+
+
+    navigation.navigate("Home", { login, email, password, avatar });
+    setLogin("");
     setEmail("");
     setPassword("");
-  }
+  };
 
-  const onLoadAvatar=async()=>{
-    const img=await DocumentPicker.getDocumentAsync({
-        type:'image/*'
-      })
-      if(img.type==='cancel'){
-        return setAvatar(null)
+  const onLoadAvatar = async () => {
+    if (avatar) {
+      setAvatar(null);
+      return;
+    }
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setAvatar(result.assets[0].uri);
+    }
+  };
+
+  const uploadImageToServer = async (imageUri, prefixFolder) => {
+    const uniquePostId = Date.now().toString();
+
+    if (imageUri) {
+      try {
+        const response = await fetch(imageUri);
+
+        const file = await response.blob();
+
+        const imageRef = await ref(
+          myStorage,
+          `${prefixFolder}/${uniquePostId}`
+        );
+
+        await uploadBytes(imageRef, file);
+
+        const downloadURL = await getDownloadURL(imageRef);
+
+        return downloadURL;
+      } catch (error) {
+        console.warn("uploadImageToServer: ", error);
       }
-      setAvatar(img)
-}
+    }
+  };
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -74,17 +121,20 @@ export function RegistrationScreen() {
                     top: isFocused ? "-5%" : "-15%",
                   }}
                 >
-                  {avatar&&<Image style={styles.avatar}source={avatar}/>}
+                  {avatar && <Image style={styles.avatar} source={avatar} />}
                   <View style={styles.iconBtn}>
                     <TouchableOpacity onPress={onLoadAvatar}>
-                      {!avatar?(<Image
-                        style={styles.icon}
-                        source={require("./Images/add.jpg")}
-                      />):( <Image
-                        style={styles.icon}
-                        source={require("./Images/delete.jpg")}
-                      />)
-                      }
+                      {!avatar ? (
+                        <Image
+                          style={styles.icon}
+                          source={require("./Images/add.jpg")}
+                        />
+                      ) : (
+                        <Image
+                          style={styles.icon}
+                          source={require("./Images/delete.jpg")}
+                        />
+                      )}
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -94,12 +144,13 @@ export function RegistrationScreen() {
                   style={styles.input}
                   placeholder="Логін"
                   value={login}
-                  textContentType='nickname'
-                  
+                  textContentType="nickname"
                   onFocus={() => {
                     setIsFocused(true);
                   }}
-                  onChangeText={(value)=>{setLogin(value)}}
+                  onChangeText={(value) => {
+                    setLogin(value);
+                  }}
                 />
 
                 <TextInput
@@ -107,11 +158,13 @@ export function RegistrationScreen() {
                   placeholder="Адреса електронної пошти"
                   keyboardType="email-address"
                   value={email}
-                  textContentType='emailAddress'
+                  textContentType="emailAddress"
                   onFocus={() => {
                     setIsFocused(true);
                   }}
-                  onChangeText={(value)=>{setEmail(value)}}
+                  onChangeText={(value) => {
+                    setEmail(value);
+                  }}
                 />
 
                 <View>
@@ -119,24 +172,36 @@ export function RegistrationScreen() {
                     style={styles.input}
                     placeholder="Пароль"
                     value={password}
-                    textContentType='password'
+                    textContentType="password"
                     secureTextEntry={shouldShow}
                     onFocus={() => {
                       setIsFocused(true);
                     }}
-                    onChangeText={(value)=>{setPassword(value)}}
+                    onChangeText={(value) => {
+                      setPassword(value);
+                    }}
                   />
-                  <TouchableOpacity style={styles.showPassword} onPress={()=>{setShouldShow(!shouldShow)}}>
-                    <Text style={styles.showPassword_text}>{shouldShow?'Показати':"Приховати"}</Text>
+                  <TouchableOpacity
+                    style={styles.showPassword}
+                    onPress={() => {
+                      setShouldShow(!shouldShow);
+                    }}
+                  >
+                    <Text style={styles.showPassword_text}>
+                      {shouldShow ? "Показати" : "Приховати"}
+                    </Text>
                   </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={styles.btn_sign} onPress={handleSubmit}>
+                <TouchableOpacity
+                  style={styles.btn_sign}
+                  onPress={handleSubmit}
+                >
                   <Text style={styles.btn_sign_text}>Зареєстуватися</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-                <Text style={styles.sentence}>Вже є акаунт? Увійти</Text>
+                  <Text style={styles.sentence}>Вже є акаунт? Увійти</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -245,8 +310,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     borderRadius: 16,
   },
-  avatar:{
+  avatar: {
     width: 120,
     height: 120,
-  }
+  },
 });

@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getReactNativePersistence, initializeAuth } from 'firebase/auth/react-native';
-// Функція для підключення бази даних у проект
+
 import { getFirestore } from "firebase/firestore";
-// Функція для підключення сховища файлів в проект
+
 import { getStorage } from "firebase/storage";
 import 'firebase/compat/auth';
-import { getAuth } from 'firebase/auth';
+ 
 import 'firebase/auth';
 
 const firebaseConfig = {
