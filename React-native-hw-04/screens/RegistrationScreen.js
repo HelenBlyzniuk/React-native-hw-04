@@ -11,12 +11,12 @@ import {
   Keyboard,
   Alert,
 } from "react-native";
-// import {getAuth} from 'firebase/auth';
+
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-// import * as DocumentPicker from "expo-document-picker";
+
 import * as ImagePicker from "expo-image-picker";
-import { useDispatch } from "react-redux";
+import { useDispatch,getState } from "react-redux";
 import { registerDB,authStateChange } from "../redux/auth/operations";
 import { auth,storage } from "../firebase/firebaseConfigs";
 import { createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
@@ -25,9 +25,11 @@ import  {
   uploadBytesResumable,
   ref,
   getDownloadURL,
-  getStorage
- 
 } from "firebase/storage"; 
+// import {addDoc,collection,onSnapshot}from 'firebase/firestore'
+import { createUserProfile } from "../redux/auth/authSlice";
+import { selectLogin } from "../redux/auth/authSelectors";
+// import { getState } from "@reduxjs/toolkit";
 
 
 
@@ -50,24 +52,31 @@ export function RegistrationScreen() {
     }
 
     const photo = avatar
-      ? await uploadImageToServer()
+      ? await uploadImageToServer(avatar)
       : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png";
    
       try {
         const data=await createUserWithEmailAndPassword(auth, email, password);
         
         const user=await auth.currentUser;
-        // console.log("user", user)
+        console.log("user", user)
         
         await updateProfile(user,{
           displayName: login,
           photoURL: photo,
         });
-        
+        console.log("user", user)
 
         const {uid,displayName,photoURL}=await auth.currentUser;
+        const userProfile={
+          login:displayName,
+          email,
+          avatar:photoURL,
+          userId:uid,
+        }
         console.log("user",displayName)
-       
+       dispatch(createUserProfile(userProfile));
+      
      
       } catch (error) {
         console.log(error) ;
@@ -118,7 +127,7 @@ export function RegistrationScreen() {
   }
   };
 
-  const uploadImageToServer = async () => {
+  const uploadImageToServer = async (uri) => {
     console.log(avatar)
 
     if (avatar) {
@@ -131,7 +140,7 @@ export function RegistrationScreen() {
           storage,
           `profileAvatar/${uniquePostId}/${file.data.name}`
         );
-  console.log(imageRef)
+        console.log(imageRef)
         await uploadBytes(imageRef, file);
 
         const downloadURL = await getDownloadURL(imageRef);
