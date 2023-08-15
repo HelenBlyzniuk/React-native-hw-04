@@ -19,7 +19,15 @@ import * as ImagePicker from "expo-image-picker";
 import { useDispatch } from "react-redux";
 import { registerDB,authStateChange } from "../redux/auth/operations";
 import { auth,storage } from "../firebase/firebaseConfigs";
-import { createUserWithEmailAndPassword ,updateProfile,getDownloadURL} from "firebase/auth";
+import { createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
+import  {
+  uploadBytes,
+  uploadBytesResumable,
+  ref,
+  getDownloadURL,
+  getStorage
+ 
+} from "firebase/storage"; 
 
 
 
@@ -94,32 +102,36 @@ export function RegistrationScreen() {
       alert("Sorry, we need camera roll permissions to make this work!");
       return;
     }
-   const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 4],
-      quality: 1,
-    });
+ 
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
 
-    if (!result.assets.length>0) {
-      setAvatar(result.assets[0]);
-    }
+  console.log(result);
+
+  if (!result.canceled) {
+    setAvatar(result.assets[0].uri);
+    
+  }
   };
 
   const uploadImageToServer = async () => {
-   
+    console.log(avatar)
 
     if (avatar) {
       try {
-        const response = await fetch(avatar.uri);
+        const response = await fetch(avatar);
 
         const file = await response.blob();
         const uniquePostId=Date.now().toString()
-        const imageRef = await ref(
+        const imageRef = ref(
           storage,
           `profileAvatar/${uniquePostId}/${file.data.name}`
         );
-
+  console.log(imageRef)
         await uploadBytes(imageRef, file);
 
         const downloadURL = await getDownloadURL(imageRef);
