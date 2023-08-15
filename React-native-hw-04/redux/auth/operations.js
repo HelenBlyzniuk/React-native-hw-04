@@ -11,34 +11,30 @@ import { auth } from "../../firebase/firebaseConfigs";
 import { createUserProfile, authLogOut, authStateChange } from "./authSlice";
 // import { auth } from "../../firebase/firebaseConfigs.js";
 
-export const registerDB = async ({ login, email, password, avatar }) => {
-  async (dispatch, state) => {
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      const user = auth.currentUser;
-      console.log(user)
-      // await updateProfile(user, {
-      //   displayName: login,
-      //   avatar: avatar,
-      // });
-      // const {
-      //   uid,
-      //   displayName,
-      //   email: emailBase,
-      //   avatar: photoUrlBase,
-      // } = auth.currentUser;
-      // const userProfile = {
-      //   userId: uid,
-      //   login: displayName,
-      //   email: emailBase,
-      //   avatar: photoUrlBase,
-      // };
-      // dispatch(createUserProfile(userProfile));
-    } catch (error) {
-      return error.code;
-    }
-  };
-};
+// export const registerDB = async ({ login, email, password, photo }) => {
+//   async (dispatch, state) => {
+//     try {
+//       await createUserWithEmailAndPassword(auth, email, password);
+//       const user = auth.currentUser;
+//       console.log(user)
+//       await updateProfile(user, {
+//         displayName: login,
+//          photoURL: photo,
+//       });
+//       const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
+//       const userProfile = {
+//         userId: uid,
+//         login: displayName,
+//         email: emailBase,
+//         avatar: photoURL,
+//       };
+//       dispatch(createUserProfile(userProfile));
+//     } catch (error) {
+//      console.log(error.message)
+//      alert("sign up failed");
+//     }
+//   };
+// };
 
 // export const loginUser =
 //   ({ email, password }) =>

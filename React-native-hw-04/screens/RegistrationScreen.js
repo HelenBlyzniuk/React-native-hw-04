@@ -58,7 +58,7 @@ export function RegistrationScreen() {
       try {
         const data=await createUserWithEmailAndPassword(auth, email, password);
         
-        const user=await auth.currentUser;
+        const user= auth.currentUser;
         console.log("user", user)
         
         await updateProfile(user,{
@@ -67,14 +67,14 @@ export function RegistrationScreen() {
         });
         console.log("user", user)
 
-        const {uid,displayName,photoURL}=await auth.currentUser;
+        const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
         const userProfile={
           login:displayName,
-          email,
+          email:emailBase,
           avatar:photoURL,
           userId:uid,
         }
-        console.log("user",displayName)
+        console.log("user",emailBase)
        dispatch(createUserProfile(userProfile));
       
      
@@ -82,9 +82,9 @@ export function RegistrationScreen() {
         console.log(error) ;
         alert("sign up failed");
       }
-   
+  
 
-    // dispatch(registerDB(login, email, password, avatar)).then((data) => {
+    // dispatch(registerDB({login, email, password, photo})).then((data) => {
     //   console.log(data)
     //   if (data === undefined || !data.uid) {
     //     alert(`Реєстрацію не виконано!`);
@@ -95,10 +95,10 @@ export function RegistrationScreen() {
     // });
 
 
-    // navigation.navigate("Home", { login, email, password, avatar });
-    // setLogin("");
-    // setEmail("");
-    // setPassword("");
+    navigation.navigate("Home");
+    setLogin("");
+    setEmail("");
+    setPassword("");
   };
 
   const onLoadAvatar = async () => {
