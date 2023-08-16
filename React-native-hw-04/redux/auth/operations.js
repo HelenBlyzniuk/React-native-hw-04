@@ -7,47 +7,53 @@ import {
   getAuth
 } from "firebase/auth";
 
+
 import { auth } from "../../firebase/firebaseConfigs";
 import { createUserProfile, authLogOut, authStateChange } from "./authSlice";
-// import { auth } from "../../firebase/firebaseConfigs.js";
 
-// export const registerDB = async ({ login, email, password, photo }) => {
-//   async (dispatch, state) => {
-//     try {
-//       await createUserWithEmailAndPassword(auth, email, password);
-//       const user = auth.currentUser;
-//       console.log(user)
-//       await updateProfile(user, {
-//         displayName: login,
-//          photoURL: photo,
-//       });
-//       const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
-//       const userProfile = {
-//         userId: uid,
-//         login: displayName,
-//         email: emailBase,
-//         avatar: photoURL,
-//       };
-//       dispatch(createUserProfile(userProfile));
-//     } catch (error) {
-//      console.log(error.message)
-//      alert("sign up failed");
-//     }
-//   };
-// };
+export const registerDB =  ({ login, email, password, photo }) => 
+  async (dispatch, state) => {
+    try {
+        const data=await createUserWithEmailAndPassword(auth, email, password);
+        
+        const user= auth.currentUser;
+        // console.log("user", user)
+        
+        await updateProfile(user,{
+          displayName: login,
+          photoURL: photo,
+        });
+        // console.log("user", user)
 
-// export const loginUser =
-//   ({ email, password }) =>
-//   async (dispatch, state) => {
-//     try {
-//       // return await signInWithEmailAndPassword(auth, email, password);
-//       const credentials = await signInWithEmailAndPassword(auth, email, password);
-//       console.log("credentials",credentials.user)
-//       // return credentials.user;
-//     } catch (error) {
-//       return error.code;
-//     }
-//   };
+        const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
+        const userProfile={
+          login:displayName,
+          email:emailBase,
+          avatar:photoURL,
+          userId:uid,
+        }
+       
+        dispatch(createUserProfile(userProfile));
+     
+    } catch (error) {
+     console.log(error.message)
+     alert("sign up failed");
+    }
+  };
+
+
+export const loginUser =
+  ({ email, password }) =>
+  async (dispatch, state) => {
+    try {
+      // return await signInWithEmailAndPassword(auth, email, password);
+      const credentials = await signInWithEmailAndPassword(auth, email, password);
+      console.log("credentials",credentials.user)
+      // return credentials.user;
+    } catch (error) {
+      return error.code;
+    }
+  };
 
 // export const updateUser =
 //   ({ avatarURL }) =>

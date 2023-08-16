@@ -29,6 +29,7 @@ import  {
 // import {addDoc,collection,onSnapshot}from 'firebase/firestore'
 import { createUserProfile,authStateChange } from "../redux/auth/authSlice";
 import { selectLogin } from "../redux/auth/authSelectors";
+import { registerDB } from "../redux/auth/operations";
 // import { getState } from "@reduxjs/toolkit";
 
 
@@ -56,27 +57,28 @@ export function RegistrationScreen() {
       : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png";
    
       try {
-        const data=await createUserWithEmailAndPassword(auth, email, password);
+        dispatch(registerDB({login,email,password,photo}))
+        // const data=await createUserWithEmailAndPassword(auth, email, password);
         
-        const user= auth.currentUser;
-        console.log("user", user)
+        // const user= auth.currentUser;
+        // console.log("user", user)
         
-        await updateProfile(user,{
-          displayName: login,
-          photoURL: photo,
-        });
-        console.log("user", user)
+        // await updateProfile(user,{
+        //   displayName: login,
+        //   photoURL: photo,
+        // });
+        // console.log("user", user)
 
-        const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
-        const userProfile={
-          login:displayName,
-          email:emailBase,
-          avatar:photoURL,
-          userId:uid,
-        }
+        // const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
+        // const userProfile={
+        //   login:displayName,
+        //   email:emailBase,
+        //   avatar:photoURL,
+        //   userId:uid,
+        // }
        
-        dispatch(createUserProfile(userProfile));
-        dispatch(authStateChange(true));
+        // dispatch(createUserProfile(userProfile));
+        // dispatch(authStateChange(true));
      
       } catch (error) {
         console.log(error) ;
