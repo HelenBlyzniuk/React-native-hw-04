@@ -11,10 +11,11 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
+import { auth } from "../../firebase/firebaseConfigs.js";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../../redux/auth/operations.js";
+
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export function LoginScreen() {
   const navigation = useNavigation();
@@ -26,13 +27,25 @@ export function LoginScreen() {
     setIsFocused(false);
     Keyboard.dismiss();
   };
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (email.trim() === "" || password.trim() === "") {
       Alert.alert("Заповніть всі поля!!!");
     }
 
-    dispatch(loginUser(email, password));
-    navigation.navigate("Home", { email, password });
+    try {
+      // return await signInWithEmailAndPassword(auth, email, password);
+      const credentials = await signInWithEmailAndPassword(auth, email, password);
+      console.log("credentials",credentials.user)
+      if(credentials){
+        navigation.navigate("Home", { email, password });
+      }
+      
+    } catch (error) {
+      return error.code;
+    }
+
+   
+    
 
     setEmail("");
     setPassword("");

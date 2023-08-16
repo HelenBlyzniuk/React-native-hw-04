@@ -17,7 +17,7 @@ import { useState } from "react";
 
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch,getState } from "react-redux";
-import { registerDB,authStateChange } from "../redux/auth/operations";
+// import { registerDB,authStateChange } from "../redux/auth/operations";
 import { auth,storage } from "../firebase/firebaseConfigs";
 import { createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
 import  {
@@ -27,7 +27,7 @@ import  {
   getDownloadURL,
 } from "firebase/storage"; 
 // import {addDoc,collection,onSnapshot}from 'firebase/firestore'
-import { createUserProfile } from "../redux/auth/authSlice";
+import { createUserProfile,authStateChange } from "../redux/auth/authSlice";
 import { selectLogin } from "../redux/auth/authSelectors";
 // import { getState } from "@reduxjs/toolkit";
 
@@ -74,9 +74,9 @@ export function RegistrationScreen() {
           avatar:photoURL,
           userId:uid,
         }
-        console.log("user",emailBase)
-       dispatch(createUserProfile(userProfile));
-      
+       
+        dispatch(createUserProfile(userProfile));
+        dispatch(authStateChange(true));
      
       } catch (error) {
         console.log(error) ;

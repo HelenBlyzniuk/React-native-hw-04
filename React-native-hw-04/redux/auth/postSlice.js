@@ -15,3 +15,4 @@ export const postSlice = createSlice({
 });
 
 export const { addComment } = postSlice.actions;
+export const postReducer=postSlice.reducer;

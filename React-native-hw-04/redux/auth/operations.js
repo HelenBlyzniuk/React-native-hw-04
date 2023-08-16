@@ -40,7 +40,10 @@ import { createUserProfile, authLogOut, authStateChange } from "./authSlice";
 //   ({ email, password }) =>
 //   async (dispatch, state) => {
 //     try {
-//       return await signInWithEmailAndPassword(auth, email, password);
+//       // return await signInWithEmailAndPassword(auth, email, password);
+//       const credentials = await signInWithEmailAndPassword(auth, email, password);
+//       console.log("credentials",credentials.user)
+//       // return credentials.user;
 //     } catch (error) {
 //       return error.code;
 //     }

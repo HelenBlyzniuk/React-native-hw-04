@@ -12,9 +12,13 @@ import {
   // import * as DocumentPicker from 'expo-document-picker';
   
   import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+// import { selectEmail } from "../../redux/auth/authSelectors";
   
   export function ProfileScreen() {
-
+   
+   const email=useSelector(state=>state.users.email)
+   console.log("email",email)
     const navigation = useNavigation();
 
     // const handleAddIconPress=()=>{
@@ -64,11 +68,7 @@ import {
             </View>
               
               </ScrollView>
-              {/* <View style={styles.post_user_footer}> 
-            <Image style={styles.post_user_footer_image} source={require('../Images/grid.jpg')}/>
-            <Image style={styles.post_user_footer_image} source={require('../Images/new.jpg')}/>
-            <Image style={styles.post_user_footer_image}source={require('../Images/addunactive.jpg')}/>
-            </View>   */}
+             
             
         </ImageBackground>
       </View>

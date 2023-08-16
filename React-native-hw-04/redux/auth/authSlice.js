@@ -9,7 +9,7 @@ const authInitialState = {
 };
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: "users",
   initialState: authInitialState,
   reducers: {
     createUserProfile: (state, { payload }) => ({
