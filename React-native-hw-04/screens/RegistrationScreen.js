@@ -121,7 +121,7 @@ export function RegistrationScreen() {
     quality: 1,
   });
 
-  console.log(result);
+  // console.log(result);
 
   if (!result.canceled) {
     setAvatar(result.assets[0].uri);
@@ -130,7 +130,7 @@ export function RegistrationScreen() {
   };
 
   const uploadImageToServer = async (uri) => {
-    console.log(avatar)
+    // console.log(avatar)
 
     if (avatar) {
       try {
@@ -142,7 +142,7 @@ export function RegistrationScreen() {
           storage,
           `profileAvatar/${uniquePostId}/${file.data.name}`
         );
-        console.log(imageRef)
+        // console.log(imageRef)
         await uploadBytes(imageRef, file);
 
         const downloadURL = await getDownloadURL(imageRef);

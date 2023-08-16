@@ -12,9 +12,15 @@ import {
 import {  useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { PostComponent } from "../Components/PostComponent";
+import { useSelector } from "react-redux";
+import { selectEmail, selectLogin, selectUserImg } from "../../redux/auth/authSelectors";
 
 
 export function InitialPostsScreen() {
+  const email=useSelector(selectEmail);
+  const avatar=useSelector(selectUserImg);
+  const login=useSelector(selectLogin);
+  console.log("email:",email)
   const { params} = useRoute();
   console.log(params)
 
@@ -56,9 +62,10 @@ export function InitialPostsScreen() {
         >
           <View style={styles.post_user_container}>
             <View style={styles.post_user_photo} />
+            <Image source={avatar}/>
             <View style={styles.post_user_info}>
-              <Text style={styles.post_user_name}>User name</Text>
-              <Text style={styles.post_user_email}>Email</Text>
+              <Text style={styles.post_user_name}>{login}</Text>
+              <Text style={styles.post_user_email}>{email}</Text>
             </View>
           </View>
          
@@ -125,8 +132,9 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
     borderColor: "#212121",
-    backgroundColor: "#FF6C00",
+    // backgroundColor: "#FF6C00",
     borderRadius: 25,
+    borderWidth:1,
   },
   post_user_info: {
     textAlign: "center",

@@ -46,10 +46,8 @@ export const loginUser =
   ({ email, password }) =>
   async (dispatch, state) => {
     try {
-      // return await signInWithEmailAndPassword(auth, email, password);
       const credentials = await signInWithEmailAndPassword(auth, email, password);
-      console.log("credentials",credentials.user)
-      // return credentials.user;
+      
     } catch (error) {
       return error.code;
     }
