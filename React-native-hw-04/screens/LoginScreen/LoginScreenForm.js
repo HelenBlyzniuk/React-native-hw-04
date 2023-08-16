@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { loginUser } from "../../redux/auth/operations.js";
 
 export function LoginScreen() {
   const navigation = useNavigation();
@@ -34,8 +35,9 @@ export function LoginScreen() {
 
     try {
       // return await signInWithEmailAndPassword(auth, email, password);
-      const credentials = await signInWithEmailAndPassword(auth, email, password);
-      console.log("credentials",credentials.user)
+      // const credentials = await signInWithEmailAndPassword(auth, email, password);
+      // console.log("credentials",credentials.user)
+      dispatch(loginUser({email,password}))
       if(credentials){
         navigation.navigate("Home", { email, password });
       }
@@ -43,9 +45,6 @@ export function LoginScreen() {
     } catch (error) {
       return error.code;
     }
-
-   
-    
 
     setEmail("");
     setPassword("");
