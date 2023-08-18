@@ -17,20 +17,19 @@ import { useState } from "react";
 
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch} from "react-redux";
-// import { registerDB,authStateChange } from "../redux/auth/operations";
+
 import { auth,storage } from "../firebase/firebaseConfigs";
-// import { createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
+
 import  {
   uploadBytes,
-  uploadBytesResumable,
   ref,
   getDownloadURL,
 } from "firebase/storage"; 
-// import {addDoc,collection,onSnapshot}from 'firebase/firestore'
+
 
 
 import { registerDB } from "../redux/auth/operations";
-// import { getState } from "@reduxjs/toolkit";
+
 
 
 
@@ -85,17 +84,6 @@ export function RegistrationScreen() {
         alert("sign up failed");
       }
   
-
-    // dispatch(registerDB({login, email, password, photo})).then((data) => {
-    //   console.log(data)
-    //   if (data === undefined || !data.uid) {
-    //     alert(`Реєстрацію не виконано!`);
-    //     return;
-    //   }
-
-    //   dispatch(authStateChange({ stateChange: true }));
-    // });
-
 
     navigation.navigate("Home");
     setLogin("");

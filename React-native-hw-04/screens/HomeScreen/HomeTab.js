@@ -53,15 +53,24 @@ export const HomeTab = () => {
         }}
         options={() => ({
           ...postsOptions,
-          // headerRight: () => (
-          //   <MaterialIcons
-          //     name="logout"
+          headerRight: () => (
+            <MaterialIcons
+              name="logout"
+              size={24}
+              color="black"
+              onPress={() => {
+                navigation.navigate("Login");
+              }}
+              style={styles.logOut}
+            />
+          ),
+          //   headerLeft: () => (
+          //   <AntDesign
+          //     name="arrowleft"
           //     size={24}
           //     color="black"
-          //     onPress={() => {
-          //       navigation.navigate("Login");
-          //     }}
-          //     style={styles.logOut}
+          //     onPress={() => navigation.navigate("Login")}
+          //     style={styles.arrowLeft}
           //   />
           // ),
          

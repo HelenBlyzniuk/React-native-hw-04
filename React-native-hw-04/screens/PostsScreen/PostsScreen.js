@@ -1,30 +1,36 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign,Feather } from "@expo/vector-icons";
 import { MapScreen } from "../MapScreen/MapScreen.js";
 import { InitialPostsScreen } from "./InitialPostsScreen.js";
 import { CommentsScreen } from "../CommentsScreen/CommentsScreen.js";
 import { StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../redux/auth/operations.js";
 const NestedStack = createStackNavigator();
 
 export const PostsScreen = () => {
   const navigation = useNavigation();
+  const dispatch=useDispatch();
+
+
+  const signOut=()=>{
+   dispatch(logOut())
+  }
   return (
     <NestedStack.Navigator
       initialRouteName="InitialPosts"
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: true }}
     >
       <NestedStack.Screen name="InitialPosts" component={InitialPostsScreen} options={{
           ...screenOptions,
           title: "Публікації",
-          headerLeft: () => (
-            <AntDesign
-              name="arrowleft"
-              size={24}
-              color="black"
-              onPress={() => navigation.navigate("Login")}
-              style={styles.arrowLeft}
-            />
+          headerRight: () => (
+            <TouchableOpacity onPress={signOut}>
+              <Feather name="log-out" size={24} color="#BDBDBD" style={styles.arrowLeft} />
+            </TouchableOpacity>
+           
           ),
         }}/>
       <NestedStack.Screen
@@ -67,7 +73,7 @@ export const PostsScreen = () => {
 
 const styles = StyleSheet.create({
   arrowLeft: {
-    marginLeft: 16,
+    // marginLeft: 16,
     marginRight: 42,
     paddingHorizontal: 16,
     paddingVertical: 10,
@@ -87,7 +93,7 @@ const screenOptions = {
     fontWeight: "bold",
     fontSize: 17,
     lineHeight: 22,
-
+    marginLeft:30,
     textAlign: "center",
   },
 };
