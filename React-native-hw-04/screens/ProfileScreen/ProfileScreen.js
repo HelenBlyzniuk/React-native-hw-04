@@ -11,8 +11,10 @@ import {
 } from "react-native";
 // import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectEmail, selectLogin, selectUserImg } from "../../redux/auth/authSelectors";
+
+import { logOut } from "../../redux/auth/operations";
 // import { selectEmail } from "../../redux/auth/authSelectors";
 
 export function ProfileScreen() {
@@ -23,10 +25,12 @@ export function ProfileScreen() {
   console.log("avatar:", avatar)
   console.log("login:",login)
   const navigation = useNavigation();
+  const dispatch=useDispatch();
 
-  // const handleAddIconPress=()=>{
-
-  // }
+  const handleLogout=()=>{
+   dispatch(logOut());
+   navigation.navigate("Registration")
+  }
 
   return (
     <View style={styles.container}>
@@ -51,10 +55,12 @@ export function ProfileScreen() {
             </View>
             <View style={styles.user}>
               <Text style={styles.name}>{login}</Text>
+              <TouchableOpacity onPress={handleLogout}>
               <Image
                 source={require("../Images/log-out.jpg")}
                 style={styles.logout_icon}
               />
+              </TouchableOpacity>
             </View>
 
             <View style={styles.textWrapper}>

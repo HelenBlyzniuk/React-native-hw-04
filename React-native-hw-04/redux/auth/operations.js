@@ -4,7 +4,7 @@ import {
   onAuthStateChanged,
   updateProfile,
   signOut,
-  getAuth
+ 
 } from "firebase/auth";
 
 
@@ -17,7 +17,7 @@ export const registerDB =  ({ login, email, password, photo }) =>
         const data=await createUserWithEmailAndPassword(auth, email, password);
         
         const user= auth.currentUser;
-        // console.log("user", user)
+        console.log("user", user)
         
         await updateProfile(user,{
           displayName: login,
@@ -26,12 +26,14 @@ export const registerDB =  ({ login, email, password, photo }) =>
         // console.log("user", user)
 
         const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
+        console.log(uid)
         const userProfile={
           login:displayName,
           email:emailBase,
           avatar:photoURL,
           userId:uid,
         }
+        console.log(user.profile)
        
         dispatch(createUserProfile(userProfile));
      

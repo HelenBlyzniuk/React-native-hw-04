@@ -16,10 +16,10 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
 import * as ImagePicker from "expo-image-picker";
-import { useDispatch,getState } from "react-redux";
+import { useDispatch} from "react-redux";
 // import { registerDB,authStateChange } from "../redux/auth/operations";
 import { auth,storage } from "../firebase/firebaseConfigs";
-import { createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
+// import { createUserWithEmailAndPassword ,updateProfile} from "firebase/auth";
 import  {
   uploadBytes,
   uploadBytesResumable,
@@ -27,8 +27,8 @@ import  {
   getDownloadURL,
 } from "firebase/storage"; 
 // import {addDoc,collection,onSnapshot}from 'firebase/firestore'
-import { createUserProfile,authStateChange } from "../redux/auth/authSlice";
-import { selectLogin } from "../redux/auth/authSelectors";
+
+
 import { registerDB } from "../redux/auth/operations";
 // import { getState } from "@reduxjs/toolkit";
 

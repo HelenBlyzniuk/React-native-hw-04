@@ -16,6 +16,11 @@ import * as Location from "expo-location";
 
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { db, storage } from "../../firebase/firebaseConfigs";
+import{ref,uploadBytes,getDownloadURL} from 'firebase/storage'
+import { addDoc,collection } from "firebase/firestore";
+import { useSelector } from "react-redux";
+import { selectLogin, selectUserId } from "../../redux/auth/authSelectors";
 
 // import * as DocumentPicker from 'expo-document-picker';
 
@@ -33,8 +38,13 @@ export function CreatePostsScreen() {
 
   //Location
   const [location, setLocation] = useState(null);
-  // const [address, setAddress] = useState(null);
+  
+  // User info
+  const user=useSelector(selectLogin);
+  const userId=useSelector(selectUserId);
 
+// console.log("user:",user)
+// console.log("id:",userId)
   useEffect(() => {
     setLocation(null);
     setImg(null);
@@ -58,7 +68,7 @@ export function CreatePostsScreen() {
       };
      
       setLocation(coords);
-      console.log(location.coords);
+     
     })();
   }, []);
 
@@ -90,7 +100,12 @@ export function CreatePostsScreen() {
         await MediaLibrary.createAssetAsync(uri);
         console.debug(uri);
         setImg(uri);
-
+        let location = await Location.getCurrentPositionAsync({});
+        const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+        setLocation(coords);
         setActiveCamera(false);
       } catch (error) {
         console.log("Error > ", error.message);
@@ -98,16 +113,54 @@ export function CreatePostsScreen() {
     }
   };
 
+  const uploadPhotoToServer = async (uri) => {
+    console.log("image", img)
+    const response = await fetch(img);
+
+    const file = await response.blob();
+
+    const uniquePostId = Date.now().toString();
+    const storageRef = ref(storage, `postImage/${uniquePostId}/${file.data.name}`);
+    
+
+    await uploadBytes(storageRef, file);
+
+    const downloadURL = await getDownloadURL(storageRef);
+    // console.log(getStorageRef, "getStorageRef");
+
+    return downloadURL;
+  };
+
+const uploadPostToServer=async()=>{
+  try {
+    const photo=await uploadPhotoToServer();
+    console.log(photo)
+    await addDoc(collection(db,"posts"),{
+      photo,
+      user,
+      userId,
+      map,
+      location,
+      postName
+    })
+    
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
   const onPostSubmit = () => {
     if (!postName || !map || !img) {
       return console.warn("Завантажте фото та заповніть поля");
     }
-    const userPost = { postName:postName.trim(), map:map.trim(), img:img, location:location};
+    uploadPostToServer();
    
-    navigation.navigate("InitialPosts",{ params: { postName:postName.trim(), map:map.trim(), img:img, location:location} });
     setPostName("");
     setMap("");
     setImg(null);
+    
+    navigation.navigate("InitialPosts");
+   
   };
 
   const disabled = () => {
