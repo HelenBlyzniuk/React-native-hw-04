@@ -1,3 +1,6 @@
+
+import {format} from'date-fns'
+import {en} from 'date-fns/locale';
 import {
   Text,
   View,
@@ -8,60 +11,77 @@ import {
   Keyboard,
   Image,
   TextInput,
+  Alert,
 } from "react-native";
+
+import {
+  getFirestore,
+  doc,
+  collection,
+  addDoc,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfigs";
 
 import { useRoute } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import { FlatList } from "react-native-gesture-handler";
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from "@react-navigation/native";
 import { CommentComponent } from "../Components/CommentComponent";
+import { useSelector } from "react-redux";
+import { selectLogin } from "../../redux/auth/authSelectors";
 
-export function CommentsScreen({navigation}) {
+const formatDate = (date) => {
+  return format(Date.parse(date), "dd MMMM, yyyy | HH:mm:ss", {
+    locale: en,
+  });
+};
+
+export function CommentsScreen({ navigation }) {
   const { params } = useRoute();
+  console.log("params",params)
   const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState([ {
-    avatar: '',
-    comment: 'Comment 1st',
-    date: '09 червня, 2023 | 08:40',
-  },
-  {
-    avatar: '',
-    comment: 'Comment 2nd',
-    date: '09 червня, 2023 | 08:40',
-  },
-  {
-    avatar: '',
-    comment: 'Comment 3d',
-    date: '09 червня, 2023 | 08:40',
-  },]);
+  const [comments, setComments] = useState([]);
   const isFocused = useIsFocused();
-
+  const userName = useSelector(selectLogin);
 
   useEffect(() => {
     if (isFocused) {
-      navigation?.getParent('home')?.setOptions({
-        tabBarStyle: { display: 'none' },
+      navigation?.getParent("home")?.setOptions({
+        tabBarStyle: { display: "none" },
         headerShown: false,
       });
     }
   }, []);
-  
+
   const handleOnPress = () => {
     // setIsFocused(false);
     Keyboard.dismiss();
   };
 
-  const addComment=()=>{
-    if(commentText.trim()===''){alert('Введіть текст коментаря')}
-    const data = {
-      avatar: '',
-      comment: commentText,
-      date: '12 червня, 2023 | 08:40',
-    };
-    setComments(prev=>[...prev,data])
+  const addComment = async () => {
+    if (commentText.trim() === "") {
+      Alert.alert("Введіть текст коментаря");
+      return;
+    }
+
+    const docRef = await doc(db, "posts", params.id);
+    console.log("docRef",docRef);
+
+    await addDoc(collection(docRef, "comments"), {
+      commentText,
+      postedDate: formatDate(new Date()),
+      userName,
+    });
+
     handleOnPress();
-    setCommentText('')
-  }
+    setCommentText("");
+  };
+
+  const getAllComments = async () => {
+
+  };
 
   return (
     <TouchableWithoutFeedback onPress={handleOnPress}>
@@ -79,22 +99,18 @@ export function CommentsScreen({navigation}) {
           )}
         />
         <KeyboardAvoidingView
-         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-         style={styles.keyboardView}
-          
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.keyboardView}
         >
-         
-
           <View style={styles.user_post_form}>
-          <TextInput
-                style={styles.user_post_input}
-                placeholder="Коментувати..."
-                value={commentText}
-                onChangeText={(value) => {
-                  setCommentText(value);
-                }}
-               
-              />
+            <TextInput
+              style={styles.user_post_input}
+              placeholder="Коментувати..."
+              value={commentText}
+              onChangeText={(value) => {
+                setCommentText(value);
+              }}
+            />
             <TouchableOpacity style={styles.btn} onPress={addComment}>
               <Image
                 style={styles.inputIcon}
@@ -121,18 +137,18 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     fontFamily: "RobotoRegular",
     fontStyle: "normal",
-    position: 'relative',
+    position: "relative",
   },
   postImg: {
     height: 240,
-    width: '100%',
+    width: "100%",
     marginBottom: 28,
 
-    backgroundColor: '#f6f6f6',
+    backgroundColor: "#f6f6f6",
 
     borderRadius: 8,
   },
-  commentList:{
+  commentList: {
     maxHeight: 312,
     marginBottom: 28,
   },
@@ -153,7 +169,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     paddingTop: 32,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   commentsContainer: {
     height: "78%",
@@ -166,12 +182,12 @@ const styles = StyleSheet.create({
     top: 7,
     right: 15,
   },
-  btn:{
-    position: 'absolute',
+  btn: {
+    position: "absolute",
     right: 8,
     bottom: 55,
     paddingHorizontal: 6,
     paddingVertical: 6,
     borderRadius: 100,
-  }
+  },
 });

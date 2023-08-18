@@ -2,14 +2,14 @@ import { useNavigation } from "@react-navigation/native"
 import { View,Text,Image ,StyleSheet} from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 
-export const PostComponent=({name,map,img,location})=>{
+export const PostComponent=({name,map,img,location,id})=>{
    const navigation=useNavigation();
     return(
         <View style={styles.postItem}>
             <Image style={styles.img} source={{uri:img}}/>
             <Text style={styles.imgText}>{name}</Text>
             <View style={styles.decorContainer}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Comments',{img})}>
+            <TouchableOpacity onPress={()=>navigation.navigate('Comments',{img,id})}>
                 <Image source={require("../Images/Shape.jpg")} style={{width:24,height:24,color:'#BDBDBD'}}/>
                 <Text style={styles.commentText}>0</Text>
             </TouchableOpacity>
