@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { PostComponent } from "../Components/PostComponent";
 import { useSelector } from "react-redux";
 import { selectEmail, selectLogin, selectUserImg } from "../../redux/auth/authSelectors";
-import { collection,getDoc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfigs";
 
 
@@ -83,7 +83,7 @@ export function InitialPostsScreen() {
         >
           <View style={styles.post_user_container}>
             <View style={styles.post_user_photo} />
-            <Image source={avatar}/>
+            <Image source={{uri:avatar}}/>
             <View style={styles.post_user_info}>
               <Text style={styles.post_user_name}>{login}</Text>
               <Text style={styles.post_user_email}>{email}</Text>

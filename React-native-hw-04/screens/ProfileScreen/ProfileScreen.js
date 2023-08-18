@@ -1,6 +1,6 @@
 import {
   Text,
-  TextInput,
+  FlatList,
   View,
   Image,
   StyleSheet,
@@ -9,23 +9,47 @@ import {
   ScrollView,
   Alert,
 } from "react-native";
+import { PostComponent } from "../Components/PostComponent";
 // import * as DocumentPicker from 'expo-document-picker';
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { selectEmail, selectLogin, selectUserImg } from "../../redux/auth/authSelectors";
 
 import { logOut } from "../../redux/auth/operations";
+import { db } from "../../firebase/firebaseConfigs";
+import { onSnapshot,collection } from "firebase/firestore";
+import { useState,useEffect } from "react";
 // import { selectEmail } from "../../redux/auth/authSelectors";
 
 export function ProfileScreen() {
+  // userInfo
   const email = useSelector(selectEmail);
   const avatar = useSelector(selectUserImg);
   const login = useSelector(selectLogin);
-  console.log("email", email);
-  console.log("avatar:", avatar)
-  console.log("login:",login)
+
+  const[posts,setPosts]=useState([])
+ 
   const navigation = useNavigation();
   const dispatch=useDispatch();
+
+  const getPosts=async()=>{
+    try {
+      await onSnapshot(collection(db,"posts"),(data) => {
+        const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        setPosts(posts)
+      
+      })
+        
+    } catch (error) {
+      console.log(error.massage);
+      Alert.alert("Try again");
+    }
+  }
+
+  useEffect(()=>{getPosts()},[]);
+
+
+
 
   const handleLogout=()=>{
    dispatch(logOut());
@@ -42,7 +66,7 @@ export function ProfileScreen() {
           <View style={styles.wrapper}>
             <View style={styles.userInfo}>
               <View style={styles.imageContainer}>
-                <Image stile={styles.avatar} source={avatar}/>
+                <Image stile={styles.avatar} source={{uri:avatar}}/>
                 <View style={styles.iconBtn}>
                   <TouchableOpacity>
                     <Image
@@ -62,15 +86,26 @@ export function ProfileScreen() {
               />
               </TouchableOpacity>
             </View>
-
-            <View style={styles.textWrapper}>
+         {posts.length===0?( <View style={styles.textWrapper}>
               <Text style={styles.text}>Нет публикаций</Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate("CreatePostsScreen")}
               >
                 <Text style={styles.aside}>Создать публикацию?</Text>
               </TouchableOpacity>
-            </View>
+            </View>):(<FlatList
+            style={styles.post_user_content}
+            data={posts}
+            renderItem={({ item }) => (
+              <PostComponent
+                name={item.postName}
+                map={item.map}
+                img={item.photo}
+                location={item.location}
+              />
+            )}
+          />)}
+           
           </View>
         </ScrollView>
       </ImageBackground>
@@ -105,7 +140,7 @@ const styles = StyleSheet.create({
   logout_icon: {
     position: "absolute",
     left: "90%",
-    top: "-320%",
+    top: "-220%",
   },
   image: {
     height: 812,
@@ -148,6 +183,10 @@ const styles = StyleSheet.create({
   },
   user: {
     alignitems: "center",
+  },
+  post_user_content: {
+    flex: 1,
+    marginTop:20,
   },
   post_user_footer: {
     flex: 1,
