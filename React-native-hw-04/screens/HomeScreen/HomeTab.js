@@ -53,17 +53,17 @@ export const HomeTab = () => {
         }}
         options={() => ({
           ...postsOptions,
-          headerRight: () => (
-            <MaterialIcons
-              name="logout"
-              size={24}
-              color="black"
-              onPress={() => {
-                navigation.navigate("Login");
-              }}
-              style={styles.logOut}
-            />
-          ),
+          // headerRight: () => (
+          //   <MaterialIcons
+          //     name="logout"
+          //     size={24}
+          //     color="black"
+          //     onPress={() => {
+          //       navigation.navigate("Login");
+          //     }}
+          //     style={styles.logOut}
+          //   />
+          // ),
          
           tabBarIcon: ({color, size,focused }) => {
             return (

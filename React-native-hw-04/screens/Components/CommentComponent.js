@@ -1,10 +1,10 @@
 import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
 
-export const CommentComponent = ({ authorAvatar, comment, date }) => {
+export const CommentComponent = ({ authorAvatar, comment, date,id }) => {
   return (
     <View style={styles.commentItem}>
       <Image style={styles.avatar} source={authorAvatar}/>
-      <View style={styles.commentWrapper}>
+      <View style={styles.commentWrapper} id={id}>
         <Text style={styles.commentText}>{comment}</Text>
         <Text style={styles.commentDate}>{date}</Text>
       </View>

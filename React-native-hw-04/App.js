@@ -8,10 +8,12 @@ import { RegistrationScreen } from "./screens/RegistrationScreen";
 import { LoginScreen } from "./screens/LoginScreen/LoginScreenForm";
 
 import { HomeTab } from "./screens/HomeScreen/HomeTab.js";
+import { Main } from "./screens/Main";
 
 import {store,persistor} from './redux/redux-storage.js';
 import { PersistGate } from 'redux-persist/integration/react';
-import {Text} from 'react-native'
+import {Text} from 'react-native';
+
 
 const MainStack = createStackNavigator();
 
@@ -25,27 +27,7 @@ export default function App() {
   return (
     <Provider store={store}>
     <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
-    <NavigationContainer>
-      <MainStack.Navigator
-        initialRouteName="Registration"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        
-        <MainStack.Screen name="Registration" component={RegistrationScreen}  screenOptions={{
-          headerShown: false,
-        }}/>
-      
-        <MainStack.Screen name="Login" component={LoginScreen}  screenOptions={{
-          headerShown: false,
-        }}/>
-        <MainStack.Screen name="Home" component={HomeTab} screenOptions={{
-          headerShown: false,
-        }}/>
-      </MainStack.Navigator>
-     
-    </NavigationContainer>
+   <Main/>
     </PersistGate>
     </Provider>
   );

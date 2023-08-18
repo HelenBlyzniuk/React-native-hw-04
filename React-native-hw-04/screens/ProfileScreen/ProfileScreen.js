@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   logout_icon: {
     position: "absolute",
     left: "90%",
-    top: "-220%",
+    top:"-320%",
   },
   image: {
     height: 812,
@@ -183,6 +183,7 @@ const styles = StyleSheet.create({
   },
   user: {
     alignitems: "center",
+    position:"relative",
   },
   post_user_content: {
     flex: 1,

@@ -70,7 +70,7 @@ export const loginUser =
 //         uid,
 //         displayName,
 //         email: emailBase,
-//         avatar: photoUrlBase,
+//         avatar: photoUrl,
 //       } = auth.currentUser;
 
 //       const userProfile = {

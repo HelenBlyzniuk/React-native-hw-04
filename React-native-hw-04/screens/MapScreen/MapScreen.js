@@ -9,8 +9,9 @@ import {
 import { useEffect } from "react";
 
 export function MapScreen() {
-  const { params } = useRoute();
-  console.log(params);
+  const { params:{location} } = useRoute();
+  console.log(location);
+  const{latitude,longitude}=location
   const isFocused = useIsFocused();
   const navigation = useNavigation();
 
@@ -28,8 +29,8 @@ export function MapScreen() {
       <MapView
         style={styles.mapStyle}
         region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude,
+          longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
@@ -40,7 +41,7 @@ export function MapScreen() {
       >
         <Marker
           title="I am here"
-          coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+          coordinate={{ latitude, longitude }}
           description="Hello"
         />
       </MapView>

@@ -79,8 +79,19 @@ export function CommentsScreen({ navigation }) {
     setCommentText("");
   };
 
-  const getAllComments = async () => {
+  useEffect(()=>{getAllComments()},[])
 
+  const getAllComments = async () => {
+    try {
+      const ref=await doc(db,"posts",params.id)
+       onSnapshot(collection(ref,"comments"),(data)=>{
+        setComments(data.docs.map((doc)=> ({...doc.data(),
+          commentId: doc.id,})))
+          
+      })
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 
   return (
@@ -92,9 +103,10 @@ export function CommentsScreen({ navigation }) {
           data={comments}
           renderItem={({ item }) => (
             <CommentComponent
+            id={item.commentIdd}
               authorAvatar={item.avatar}
-              comment={item.comment}
-              date={item.date}
+              comment={item.commentText}
+              date={item.postedDate}
             />
           )}
         />
