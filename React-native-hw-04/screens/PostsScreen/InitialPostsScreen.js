@@ -8,27 +8,48 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import {  useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { PostComponent } from "../Components/PostComponent";
 import { useSelector } from "react-redux";
 import { selectEmail, selectLogin, selectUserImg } from "../../redux/auth/authSelectors";
+import { collection,getDoc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfigs";
 
 
 export function InitialPostsScreen() {
   const email=useSelector(selectEmail);
   const avatar=useSelector(selectUserImg);
   const login=useSelector(selectLogin);
-  console.log("email:",email)
+  
   const { params} = useRoute();
-  console.log(params)
+ 
 
-  const [posts, setPosts] = useState([ {img: "file:///data/user/0/host.exp.exponent/cache/ExperienceData/%2540lenablyzniuk%252FReact-native-hw-04/Camera/e52a6693-95b2-4083-9697-12c44fecb0c0.jpg",
-   location: {latitude: 37.4220936, longitude: -122.083922},map: "Ukraine", postName: "Forest"}]);
+  const [posts, setPosts] = useState([ ]);
+  const [commentNumber, setCommentNumber]=useState(0)
   const [isKeyFocused, setIsKeyFocused] = useState(false);
   const isFocused=useIsFocused();
   const navigation=useNavigation();
+
+
+  const getPosts=async()=>{
+    try {
+      await onSnapshot(collection(db,"posts"),(data) => {
+        const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        setPosts(posts)
+      
+      })
+        
+    } catch (error) {
+      console.log(error.massage);
+      Alert.alert("Try again");
+    }
+  }
+
+  useEffect(()=>{getPosts()},[]);
+
 
   useEffect(() => {
     if (!params) {
@@ -76,7 +97,7 @@ export function InitialPostsScreen() {
               <PostComponent
                 name={item.postName}
                 map={item.map}
-                img={item.img}
+                img={item.photo}
                 location={item.location}
               />
             )}

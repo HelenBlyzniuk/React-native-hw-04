@@ -17,8 +17,8 @@ import * as Location from "expo-location";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { db, storage } from "../../firebase/firebaseConfigs";
-import{ref,uploadBytes,getDownloadURL} from 'firebase/storage'
-import { addDoc,collection } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { selectLogin, selectUserId } from "../../redux/auth/authSelectors";
 
@@ -38,13 +38,11 @@ export function CreatePostsScreen() {
 
   //Location
   const [location, setLocation] = useState(null);
-  
-  // User info
-  const user=useSelector(selectLogin);
-  const userId=useSelector(selectUserId);
 
-// console.log("user:",user)
-// console.log("id:",userId)
+  // User info
+  const user = useSelector(selectLogin);
+  const userId = useSelector(selectUserId);
+
   useEffect(() => {
     setLocation(null);
     setImg(null);
@@ -66,9 +64,8 @@ export function CreatePostsScreen() {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       };
-     
+
       setLocation(coords);
-     
     })();
   }, []);
 
@@ -78,8 +75,6 @@ export function CreatePostsScreen() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-
- 
 
   const handleOnPress = () => {
     setIsFocused(false);
@@ -102,9 +97,9 @@ export function CreatePostsScreen() {
         setImg(uri);
         let location = await Location.getCurrentPositionAsync({});
         const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        };
         setLocation(coords);
         setActiveCamera(false);
       } catch (error) {
@@ -114,14 +109,16 @@ export function CreatePostsScreen() {
   };
 
   const uploadPhotoToServer = async (uri) => {
-    console.log("image", img)
+    console.log("image", img);
     const response = await fetch(img);
 
     const file = await response.blob();
 
     const uniquePostId = Date.now().toString();
-    const storageRef = ref(storage, `postImage/${uniquePostId}/${file.data.name}`);
-    
+    const storageRef = ref(
+      storage,
+      `postImage/${uniquePostId}/${file.data.name}`
+    );
 
     await uploadBytes(storageRef, file);
 
@@ -131,36 +128,34 @@ export function CreatePostsScreen() {
     return downloadURL;
   };
 
-const uploadPostToServer=async()=>{
-  try {
-    const photo=await uploadPhotoToServer();
-    console.log(photo)
-    await addDoc(collection(db,"posts"),{
-      photo,
-      user,
-      userId,
-      map,
-      location,
-      postName
-    })
-    
-  } catch (error) {
-    console.log(error.message)
-  }
-}
+  const uploadPostToServer = async () => {
+    try {
+      const photo = await uploadPhotoToServer();
+
+      await addDoc(collection(db, "posts"), {
+        photo,
+        user,
+        userId,
+        map,
+        location,
+        postName,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const onPostSubmit = () => {
     if (!postName || !map || !img) {
       return console.warn("Завантажте фото та заповніть поля");
     }
     uploadPostToServer();
-   
+
     setPostName("");
     setMap("");
     setImg(null);
-    
+
     navigation.navigate("InitialPosts");
-   
   };
 
   const disabled = () => {
@@ -306,14 +301,13 @@ const uploadPostToServer=async()=>{
 }
 
 const styles = StyleSheet.create({
-  camera: { flex: 1, },
+  camera: { flex: 1 },
   photoView: {
     flex: 1,
     backgroundColor: "transparent",
     justifyContent: "flex-end",
   },
 
- 
   button: {
     alignSelf: "center",
     width: 40,
@@ -401,7 +395,6 @@ const styles = StyleSheet.create({
 
   map: {
     position: "absolute",
-   
   },
 
   post_user_footer: {

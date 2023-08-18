@@ -11,11 +11,10 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "../../firebase/firebaseConfigs.js";
+
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { loginUser } from "../../redux/auth/operations.js";
 
 export function LoginScreen() {
