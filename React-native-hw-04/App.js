@@ -1,13 +1,11 @@
 
 import { useFonts } from "expo-font";
-import { NavigationContainer } from "@react-navigation/native";
+import * as SplashScreen from 'expo-splash-screen';
+
 import "react-native-gesture-handler";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider } from "react-redux";
-import { RegistrationScreen } from "./screens/RegistrationScreen";
-import { LoginScreen } from "./screens/LoginScreen/LoginScreenForm";
 
-import { HomeTab } from "./screens/HomeScreen/HomeTab.js";
 import { Main } from "./screens/Main";
 
 import {store,persistor} from './redux/redux-storage.js';
@@ -27,7 +25,7 @@ export default function App() {
 
   const onLayoutRootView=useCallback(async()=>{
     if(!fontsLoaded)
-    await SplashScreen.hydeAsync()
+    await SplashScreen.hideAsync()
   },[fontsLoaded])
 
   if(!fontsLoaded){
