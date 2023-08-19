@@ -86,19 +86,21 @@ export const loginUser =
 //   };
 
 export const stateChangeUser = () => async (dispatch, state) => {
-  onAuthStateChanged(auth, (user) => {
+  let userProfile = {};
+  await onAuthStateChanged(auth, (user) => {
     if (user) {
-      const userProfile = {
+      userProfile = {
         userId: user.uid,
         login: user.displayName,
         email: user.email,
         avatar: user.photoURL,
       };
-      dispatch(authStateChange({ stateChange: true }));
-      dispatch(createUserProfile(userProfile));
     }
   });
+  dispatch(authStateChange({ stateChange: true }));
+  dispatch(createUserProfile(userProfile));
 };
+
 
 export const logOut = () => async (dispatch, state) => {
   await signOut(auth);

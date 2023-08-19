@@ -135,12 +135,13 @@ const styles = StyleSheet.create({
     height: 100,
     alignItems: "center",
     justifyContent: "center",
+    postion:"relative",
   },
 
   logout_icon: {
-    position: "absolute",
-    left: "90%",
-    top:"-320%",
+    bottom:10,
+    right:0,
+    position:"absolute",
   },
   image: {
     height: 812,

@@ -262,7 +262,7 @@ export function CreatePostsScreen() {
                 }}
               />
               <Image
-                style={{ ...styles.map, top: isFocused ? "42%" : "25%" }}
+                style={styles.map}
                 source={require("../Images/map-pin.jpg")}
               />
               <TouchableOpacity
@@ -378,6 +378,7 @@ const styles = StyleSheet.create({
   user_post_form: {
     flex: 1,
     margin: 0,
+    position:"relative",
   },
   user_post_input: {
     height: 50,
@@ -391,10 +392,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 15,
     paddingLeft: 35,
+    
   },
 
   map: {
     position: "absolute",
+    top:80,
+    left:0,
   },
 
   post_user_footer: {
