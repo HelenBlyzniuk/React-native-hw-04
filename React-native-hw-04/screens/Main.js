@@ -17,10 +17,9 @@ export function Main() {
   const dispatch = useDispatch();
   const changeState = useSelector(selectStateChange);
   useEffect(() => dispatch(stateChangeUser()), []);
-
-  return (
-    <NavigationContainer>
-      {!changeState ? (
+  if (changeState === false)
+    return (
+      <NavigationContainer>
         <MainStack.Navigator
           initialRouteName="Registration"
           screenOptions={{
@@ -42,8 +41,19 @@ export function Main() {
               headerShown: false,
             }}
           />
+          <MainStack.Screen
+            name="Home"
+            component={HomeTab}
+            screenOptions={{
+              headerShown: false,
+            }}
+          />
         </MainStack.Navigator>
-      ) : (
+      </NavigationContainer>
+    );
+  if (changeState === true)
+    return (
+      <NavigationContainer>
         <MainStack.Navigator
           initialRouteName="Home"
           screenOptions={{
@@ -58,7 +68,6 @@ export function Main() {
             }}
           />
         </MainStack.Navigator>
-      )}
-    </NavigationContainer>
-  );
+      </NavigationContainer>
+    );
 }

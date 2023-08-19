@@ -39,7 +39,7 @@ export function InitialPostsScreen() {
       await onSnapshot(collection(db,"posts"),(data) => {
         const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         setPosts(posts)
-        console.log(posts)
+        
       })
         
     } catch (error) {

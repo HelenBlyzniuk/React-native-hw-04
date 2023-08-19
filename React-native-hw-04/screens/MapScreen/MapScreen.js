@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 export function MapScreen() {
   const { params:{location} } = useRoute();
-  console.log(location);
+  
   const{latitude,longitude}=location
   const isFocused = useIsFocused();
   const navigation = useNavigation();

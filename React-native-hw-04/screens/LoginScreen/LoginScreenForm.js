@@ -33,9 +33,7 @@ export function LoginScreen() {
     }
 
     try {
-      // return await signInWithEmailAndPassword(auth, email, password);
-      // const credentials = await signInWithEmailAndPassword(auth, email, password);
-      // console.log("credentials",credentials.user)
+     
       dispatch(loginUser({email,password}))
       navigation.navigate("Home", { email, password });
       

@@ -109,7 +109,7 @@ export function CreatePostsScreen() {
   };
 
   const uploadPhotoToServer = async (uri) => {
-    console.log("image", img);
+   
     const response = await fetch(img);
 
     const file = await response.blob();
@@ -123,7 +123,7 @@ export function CreatePostsScreen() {
     await uploadBytes(storageRef, file);
 
     const downloadURL = await getDownloadURL(storageRef);
-    // console.log(getStorageRef, "getStorageRef");
+   
 
     return downloadURL;
   };

@@ -57,27 +57,7 @@ export function RegistrationScreen() {
    
       try {
         dispatch(registerDB({login,email,password,photo}))
-        // const data=await createUserWithEmailAndPassword(auth, email, password);
-        
-        // const user= auth.currentUser;
-        // console.log("user", user)
-        
-        // await updateProfile(user,{
-        //   displayName: login,
-        //   photoURL: photo,
-        // });
-        // console.log("user", user)
-
-        // const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
-        // const userProfile={
-        //   login:displayName,
-        //   email:emailBase,
-        //   avatar:photoURL,
-        //   userId:uid,
-        // }
        
-        // dispatch(createUserProfile(userProfile));
-        // dispatch(authStateChange(true));
      
       } catch (error) {
         console.log(error) ;

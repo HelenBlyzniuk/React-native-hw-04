@@ -62,7 +62,7 @@ export function ProfileScreen() {
         style={styles.image}
         source={require("../Images/photoBG.png")}
       >
-        <ScrollView>
+        {/* <ScrollView> */}
           <View style={styles.wrapper}>
             <View style={styles.userInfo}>
               <View style={styles.imageContainer}>
@@ -107,7 +107,7 @@ export function ProfileScreen() {
           />)}
            
           </View>
-        </ScrollView>
+        {/* </ScrollView> */}
       </ImageBackground>
     </View>
   );
