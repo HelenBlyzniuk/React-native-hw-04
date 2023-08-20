@@ -147,7 +147,7 @@ export function RegistrationScreen() {
                     top: isFocused ? "-5%" : "-15%",
                   }}
                 >
-                  {avatar && <Image style={styles.avatar} source={avatar} />}
+                  {avatar && <Image style={styles.avatar} source={{uri:"avatar"}} />}
                   <View style={styles.iconBtn}>
                     <TouchableOpacity onPress={onLoadAvatar}>
                       {!avatar ? (

@@ -67,6 +67,13 @@ export function Main() {
               headerShown: false,
             }}
           />
+           <MainStack.Screen
+            name="Login"
+            component={LoginScreen}
+            screenOptions={{
+              headerShown: false,
+            }}
+          />
         </MainStack.Navigator>
       </NavigationContainer>
     );

@@ -25,6 +25,7 @@ export function ProfileScreen() {
   // userInfo
   const email = useSelector(selectEmail);
   const avatar = useSelector(selectUserImg);
+  console.log(1111,avatar)
   const login = useSelector(selectLogin);
 
   const[posts,setPosts]=useState([])
@@ -66,7 +67,7 @@ export function ProfileScreen() {
           <View style={styles.wrapper}>
             <View style={styles.userInfo}>
               <View style={styles.imageContainer}>
-                <Image stile={styles.avatar} source={{uri:avatar}}/>
+                <Image stile={styles.avatar} source={{uri:"avatar"}}/>
                 <View style={styles.iconBtn}>
                   <TouchableOpacity>
                     <Image
@@ -164,14 +165,17 @@ const styles = StyleSheet.create({
     left: "33%",
     width: 120,
     height: 120,
-    // backgroundColor: "#F6F6F6",
+    opacity:1,
+    backgroundColor: "#F6F6F6",
     borderRadius: 16,
     top: "-100%",
   },
   avatar:{
-    width:120,
-    height:120,
+    // width:120,
+    // height:120,
     borderRadius: 16,
+    width: "100%",
+    height: "100%",
   },
   name: {
     fontFamily: "RobotoMedium",

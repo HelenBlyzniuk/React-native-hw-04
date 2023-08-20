@@ -83,7 +83,7 @@ export function InitialPostsScreen() {
         >
           <View style={styles.post_user_container}>
             <View style={styles.post_user_photo} />
-            <Image source={{uri:avatar}}/>
+            <Image source={{uri:"avatar"}}/>
             <View style={styles.post_user_info}>
               <Text style={styles.post_user_name}>{login}</Text>
               <Text style={styles.post_user_email}>{email}</Text>
