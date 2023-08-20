@@ -82,8 +82,9 @@ export function InitialPostsScreen() {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <View style={styles.post_user_container}>
-            <View style={styles.post_user_photo} />
-            <Image source={{uri:"avatar"}}/>
+            {!avatar?(<View style={styles.post_user_photo} />):(<Image style={styles.avatar} source={{uri:avatar}}/>)}
+            {/* <View style={styles.post_user_photo} />
+            <Image style={styles.avatar} source={{uri:avatar}}/> */}
             <View style={styles.post_user_info}>
               <Text style={styles.post_user_name}>{login}</Text>
               <Text style={styles.post_user_email}>{email}</Text>
@@ -155,6 +156,12 @@ const styles = StyleSheet.create({
     width: 60,
     borderColor: "#212121",
     // backgroundColor: "#FF6C00",
+    borderRadius: 25,
+    borderWidth:1,
+  },
+  avatar:{
+    height: 60,
+    width: 60,
     borderRadius: 25,
     borderWidth:1,
   },

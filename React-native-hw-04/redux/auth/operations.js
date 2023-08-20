@@ -48,8 +48,19 @@ export const loginUser =
   ({ email, password }) =>
   async (dispatch, state) => {
     try {
-      const credentials = await signInWithEmailAndPassword(auth, email, password);
-      console.log("credentials:",credentials)
+      const user = await signInWithEmailAndPassword(auth, email, password);
+      
+      const {uid,displayName,photoURL,email:emailBase}= user.user;
+     
+      const userProfile={
+        login:displayName,
+        email:emailBase,
+        avatar:photoURL,
+        userId:uid,
+      }
+      
+     
+      dispatch(createUserProfile(userProfile));
       
     } catch (error) {
       return error.code;
@@ -58,9 +69,10 @@ export const loginUser =
 
 
 export const stateChangeUser = () => async (dispatch, state) => {
-  let userProfile = {};
-  await onAuthStateChanged(auth, (user) => {
+  // let userProfile = {};
+  await onAuthStateChanged(auth, user => {
     if (user) {
+      
       userProfile = {
         userId: user.uid,
         login: user.displayName,
@@ -68,7 +80,9 @@ export const stateChangeUser = () => async (dispatch, state) => {
         avatar: user.photoURL,
       };
     }
+    return userProfile;
   });
+  
   dispatch(authStateChange({ stateChange: true }));
   dispatch(createUserProfile(userProfile));
 };

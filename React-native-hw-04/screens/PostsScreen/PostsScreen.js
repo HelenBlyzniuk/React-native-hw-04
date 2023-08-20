@@ -16,7 +16,8 @@ export const PostsScreen = () => {
 
 
   const signOut=()=>{
-   dispatch(logOut())
+   dispatch(logOut());
+   navigation.navigate('Login')
   }
   return (
     <NestedStack.Navigator

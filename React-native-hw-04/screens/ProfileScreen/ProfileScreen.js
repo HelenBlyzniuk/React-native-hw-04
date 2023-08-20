@@ -54,7 +54,7 @@ export function ProfileScreen() {
 
   const handleLogout=()=>{
    dispatch(logOut());
-   navigation.navigate("Registration")
+   navigation.navigate("Login")
   }
 
   return (
@@ -66,17 +66,12 @@ export function ProfileScreen() {
         {/* <ScrollView> */}
           <View style={styles.wrapper}>
             <View style={styles.userInfo}>
-              <View style={styles.imageContainer}>
-                <Image stile={styles.avatar} source={{uri:"avatar"}}/>
-                <View style={styles.iconBtn}>
-                  <TouchableOpacity>
-                    <Image
-                      style={styles.icon}
-                      source={require("../Images/add.jpg")}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
+            {!avatar?(<View style={styles.imageContainer}/>):( <Image style={styles.avatar} source={{uri:avatar}}/>)}
+              
+                
+               
+          
+              {/* </View> */}
             </View>
             <View style={styles.user}>
               <Text style={styles.name}>{login}</Text>
@@ -151,31 +146,34 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
 
-  icon: {
-    width: 25,
-    height: 25,
-  },
-  iconBtn: {
-    position: "absolute",
-    left: "90%",
-    top: "65%",
-  },
+  // icon: {
+  //   width: 25,
+  //   height: 25,
+  // },
+  // iconBtn: {
+  //   position: "absolute",
+  //   left: "90%",
+  //   top: "65%",
+  // },
   imageContainer: {
     position: "absolute",
     left: "33%",
     width: 120,
     height: 120,
-    opacity:1,
-    backgroundColor: "#F6F6F6",
+    // opacity:0,
+    // backgroundColor: "#F6F6F6",
     borderRadius: 16,
-    top: "-100%",
+    
   },
   avatar:{
-    // width:120,
-    // height:120,
+    position: "absolute",
+    left: "33%",
+    width:120,
+    height:120,
     borderRadius: 16,
-    width: "100%",
-    height: "100%",
+    // width: "100%",
+    // height: "100%",
+    top: "-100%",
   },
   name: {
     fontFamily: "RobotoMedium",
