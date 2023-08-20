@@ -32,10 +32,6 @@ const reducer = combineReducers({
 
 const persistedReducer=persistReducer(persistConfig,reducer)
 
-// const reducer = combineReducers({
-//   [authSlice.name]: persistReducer(persistConfig, authSlice.reducer),
-//   [postSlice.name]: postSlice.reducer,
-// })
 
 export const store = configureStore({
   reducer:persistedReducer,
@@ -49,23 +45,4 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-// const persistConfig = {
-//   key: 'auth',
-//   storage: AsyncStorage,
-// };
 
-// const reducer = persistReducer(persistConfig, rootReducer);
-
-// const store = configureStore({
-//   reducer,
-//   middleware: getDefaultMiddleware =>
-//     getDefaultMiddleware({
-//       serializableCheck: {
-//         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-//       },
-//     }),
-// });
-
-// const persistor = persistStore(store);
-
-// export default { store, persistor };

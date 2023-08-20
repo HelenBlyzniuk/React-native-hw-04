@@ -9,9 +9,11 @@ import {
 import { useEffect } from "react";
 
 export function MapScreen() {
-  const { params:{location} } = useRoute();
-  
-  const{latitude,longitude}=location
+  const {
+    params: { location },
+  } = useRoute();
+
+  const { latitude, longitude } = location;
   const isFocused = useIsFocused();
   const navigation = useNavigation();
 

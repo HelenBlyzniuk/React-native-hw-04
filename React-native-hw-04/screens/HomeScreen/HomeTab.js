@@ -1,4 +1,4 @@
-import {  StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { PostsScreen } from "../PostsScreen/PostsScreen";
 import { ProfileScreen } from "../ProfileScreen/ProfileScreen";
@@ -7,9 +7,8 @@ import { CreatePostsScreen } from "../CreatePostsScreen/CreatePostsScreen";
 import { useNavigation } from "@react-navigation/native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, MaterialIcons,AntDesign } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
-
 
 const BottomTabs = createBottomTabNavigator();
 
@@ -17,7 +16,7 @@ export const HomeTab = () => {
   const navigation = useNavigation();
   return (
     <BottomTabs.Navigator
-    id='home'
+      id="home"
       screenOptions={() => ({
         tabBarShowLabel: false,
         tabBarShowIcon: true,
@@ -37,7 +36,7 @@ export const HomeTab = () => {
           marginRight: 15,
           marginLeft: 15,
         },
-       
+
         tabBarActiveBackgroundColor: "#FF6C00",
         tabBarActiveTintColor: "#FFFFFF",
         tabBarInactiveBackgroundColor: "#FFFFFF",
@@ -73,13 +72,12 @@ export const HomeTab = () => {
           //     style={styles.arrowLeft}
           //   />
           // ),
-         
-          tabBarIcon: ({color, size,focused }) => {
+
+          tabBarIcon: ({ color, size, focused }) => {
             return (
               <Feather
                 name="grid"
                 size={24}
-                
                 color={focused ? "white" : "#212121"}
               />
             );
@@ -95,24 +93,28 @@ export const HomeTab = () => {
           inactiveTintColor: "#212121",
         }}
         options={({ navigation }) => ({
-          tabBarStyle: { display: 'none' },
+          tabBarStyle: { display: "none" },
           ...createPostsOptions,
           headerLeft: () => (
-            <AntDesign name="arrowleft" size={24} color="black" 
+            <AntDesign
+              name="arrowleft"
+              size={24}
+              color="black"
               onPress={() => {
-                navigation.navigate('Posts');
+                navigation.navigate("Posts");
               }}
-             
               style={styles.arrowLeft}
             />
           ),
-          
-          
-          tabBarIcon: ({color, size,focused }) => {
-           return(  <Ionicons name="add" size={24} color={focused ? "white" : "#212121"} />)
-           
-            
-        
+
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <Ionicons
+                name="add"
+                size={24}
+                color={focused ? "white" : "#212121"}
+              />
+            );
           },
         })}
       />
@@ -127,17 +129,25 @@ export const HomeTab = () => {
         options={({ navigation }) => ({
           ...profileOptions,
           headerLeft: () => (
-            <AntDesign name="arrowleft" size={24} color="black" 
-            onPress={() => {
-              navigation.navigate('Posts');
-            }}
-           
-            style={styles.arrowLeft}
-          />
-        ),
-         
-          tabBarIcon: ({  color, size,focused }) => {
-            return<Feather name="user" size={24} color={focused ? "white" : "#212121"} />;
+            <AntDesign
+              name="arrowleft"
+              size={24}
+              color="black"
+              onPress={() => {
+                navigation.navigate("Posts");
+              }}
+              style={styles.arrowLeft}
+            />
+          ),
+
+          tabBarIcon: ({ color, size, focused }) => {
+            return (
+              <Feather
+                name="user"
+                size={24}
+                color={focused ? "white" : "#212121"}
+              />
+            );
           },
         })}
       />
@@ -146,7 +156,6 @@ export const HomeTab = () => {
 };
 
 const styles = StyleSheet.create({
- 
   arrowLeft: {
     marginLeft: 16,
     marginRight: 42,
@@ -157,7 +166,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginRight: 70,
-    
   },
 });
 
@@ -217,8 +225,6 @@ const postsOptions = {
     textAlign: "center",
   },
 };
-
-
 
 // export function Home() {
 //   const MainScreen = createStackNavigator();

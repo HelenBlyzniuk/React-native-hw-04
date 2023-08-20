@@ -27,17 +27,14 @@ export function LoginScreen() {
     setIsFocused(false);
     Keyboard.dismiss();
   };
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     if (email.trim() === "" || password.trim() === "") {
       Alert.alert("Заповніть всі поля!!!");
     }
 
     try {
-     
-      dispatch(loginUser({email,password}))
+      dispatch(loginUser({ email, password }));
       navigation.navigate("Home", { email, password });
-      
-      
     } catch (error) {
       return error.code;
     }

@@ -7,69 +7,70 @@ import {
   Keyboard,
   FlatList,
   Image,
-  TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
-import {  useIsFocused, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { PostComponent } from "../Components/PostComponent";
 import { useSelector } from "react-redux";
-import { selectEmail, selectLogin, selectUserImg } from "../../redux/auth/authSelectors";
+import {
+  selectEmail,
+  selectLogin,
+  selectUserImg,
+} from "../../redux/auth/authSelectors";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfigs";
 
-
 export function InitialPostsScreen() {
-  const email=useSelector(selectEmail);
-  const avatar=useSelector(selectUserImg);
-  const login=useSelector(selectLogin);
-  
-  const { params} = useRoute();
- 
+  const email = useSelector(selectEmail);
+  const avatar = useSelector(selectUserImg);
+  const login = useSelector(selectLogin);
 
-  const [posts, setPosts] = useState([ ]);
-  const [commentNumber, setCommentNumber]=useState(0)
+  const { params } = useRoute();
+
+  const [posts, setPosts] = useState([]);
+  const [commentNumber, setCommentNumber] = useState(0);
   const [isKeyFocused, setIsKeyFocused] = useState(false);
-  const isFocused=useIsFocused();
-  const navigation=useNavigation();
+  const isFocused = useIsFocused();
+  const navigation = useNavigation();
 
-
-  const getPosts=async()=>{
+  const getPosts = async () => {
     try {
-      await onSnapshot(collection(db,"posts"),(data) => {
-        const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        setPosts(posts)
-        
-      })
-        
+      await onSnapshot(collection(db, "posts"), (data) => {
+        const posts = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        setPosts(posts);
+      });
     } catch (error) {
       console.log(error.massage);
       Alert.alert("Try again");
     }
-  }
+  };
 
-  useEffect(()=>{getPosts()},[]);
-
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   useEffect(() => {
     if (!params) {
       return;
     }
-    const newPost=params.params;
-    console.log("params in useEfeect",params.params)
+    const newPost = params.params;
+    console.log("params in useEfeect", params.params);
     setPosts((prev) => [...prev, newPost]);
   }, [params]);
-  
+
   useEffect(() => {
     if (isFocused) {
       navigation?.getParent("home")?.setOptions({
-       
         headerShown: false,
       });
     }
   }, []);
 
-  
   const handleOnPress = () => {
     setIsKeyFocused(false);
     Keyboard.dismiss();
@@ -82,7 +83,11 @@ export function InitialPostsScreen() {
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <View style={styles.post_user_container}>
-            {!avatar?(<View style={styles.post_user_photo} />):(<Image style={styles.avatar} source={{uri:avatar}}/>)}
+            {!avatar ? (
+              <View style={styles.post_user_photo} />
+            ) : (
+              <Image style={styles.avatar} source={{ uri: avatar }} />
+            )}
             {/* <View style={styles.post_user_photo} />
             <Image style={styles.avatar} source={{uri:avatar}}/> */}
             <View style={styles.post_user_info}>
@@ -90,7 +95,7 @@ export function InitialPostsScreen() {
               <Text style={styles.post_user_email}>{email}</Text>
             </View>
           </View>
-         
+
           <FlatList
             style={styles.post_user_content}
             data={posts}
@@ -157,13 +162,13 @@ const styles = StyleSheet.create({
     borderColor: "#212121",
     // backgroundColor: "#FF6C00",
     borderRadius: 25,
-    borderWidth:1,
+    borderWidth: 1,
   },
-  avatar:{
+  avatar: {
     height: 60,
     width: 60,
     borderRadius: 25,
-    borderWidth:1,
+    borderWidth: 1,
   },
   post_user_info: {
     textAlign: "center",
@@ -183,7 +188,7 @@ const styles = StyleSheet.create({
   },
   post_user_content: {
     flex: 1,
-    marginTop:20,
+    marginTop: 20,
   },
   post_user_footer: {
     flex: 1,

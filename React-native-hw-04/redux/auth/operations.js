@@ -4,75 +4,65 @@ import {
   onAuthStateChanged,
   updateProfile,
   signOut,
- 
 } from "firebase/auth";
-
 
 import { auth } from "../../firebase/firebaseConfigs";
 import { createUserProfile, authLogOut, authStateChange } from "./authSlice";
 
-export const registerDB =  ({ login, email, password, photo }) => 
+export const registerDB =
+  ({ login, email, password, photo }) =>
   async (dispatch, state) => {
     try {
-        const data=await createUserWithEmailAndPassword(auth, email, password);
-        
-        const user= auth.currentUser;
-       
-        
-        await updateProfile(user,{
-          displayName: login,
-          photoURL: photo,
-        });
-        
+      const data = await createUserWithEmailAndPassword(auth, email, password);
 
-        const {uid,displayName,photoURL,email:emailBase}= auth.currentUser;
-        console.log(uid)
-        const userProfile={
-          login:displayName,
-          email:emailBase,
-          avatar:photoURL,
-          userId:uid,
-        }
-        
-       
-        dispatch(createUserProfile(userProfile));
-     
+      const user = auth.currentUser;
+
+      await updateProfile(user, {
+        displayName: login,
+        photoURL: photo,
+      });
+
+      const { uid, displayName, photoURL, email: emailBase } = auth.currentUser;
+      console.log(uid);
+      const userProfile = {
+        login: displayName,
+        email: emailBase,
+        avatar: photoURL,
+        userId: uid,
+      };
+
+      dispatch(createUserProfile(userProfile));
     } catch (error) {
-     console.log(error.message)
-     alert("sign up failed");
+      console.log(error.message);
+      alert("sign up failed");
     }
   };
-
 
 export const loginUser =
   ({ email, password }) =>
   async (dispatch, state) => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
-      
-      const {uid,displayName,photoURL,email:emailBase}= user.user;
-     
-      const userProfile={
-        login:displayName,
-        email:emailBase,
-        avatar:photoURL,
-        userId:uid,
-      }
-      
-     
+
+      const { uid, displayName, photoURL, email: emailBase } = user.user;
+
+      const userProfile = {
+        login: displayName,
+        email: emailBase,
+        avatar: photoURL,
+        userId: uid,
+      };
+
       dispatch(createUserProfile(userProfile));
-      
     } catch (error) {
       return error.code;
     }
   };
 
-
 export const stateChangeUser = () => async (dispatch, state) => {
   // let userProfile = {};
-  await onAuthStateChanged(auth, user => {
+  await onAuthStateChanged(auth, (user) => {
     if (user) {
-      
       userProfile = {
         userId: user.uid,
         login: user.displayName,
@@ -82,11 +72,10 @@ export const stateChangeUser = () => async (dispatch, state) => {
     }
     return userProfile;
   });
-  
+
   dispatch(authStateChange({ stateChange: true }));
   dispatch(createUserProfile(userProfile));
 };
-
 
 export const logOut = () => async (dispatch, state) => {
   await signOut(auth);

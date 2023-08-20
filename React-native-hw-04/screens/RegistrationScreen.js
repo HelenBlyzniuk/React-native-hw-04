@@ -16,28 +16,17 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
 import * as ImagePicker from "expo-image-picker";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { auth,storage } from "../firebase/firebaseConfigs";
+import { storage } from "../firebase/firebaseConfigs";
 
-import  {
-  uploadBytes,
-  ref,
-  getDownloadURL,
-} from "firebase/storage"; 
-
-
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 
 import { registerDB } from "../redux/auth/operations";
 
-
-
-
 export function RegistrationScreen() {
-  
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  
 
   const [isFocused, setIsFocused] = useState(false);
   const [email, setEmail] = useState("");
@@ -54,16 +43,13 @@ export function RegistrationScreen() {
     const photo = avatar
       ? await uploadImageToServer(avatar)
       : "https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png";
-   
-      try {
-        dispatch(registerDB({login,email,password,photo}))
-       
-     
-      } catch (error) {
-        console.log(error) ;
-        alert("sign up failed");
-      }
-  
+
+    try {
+      dispatch(registerDB({ login, email, password, photo }));
+    } catch (error) {
+      console.log(error);
+      alert("sign up failed");
+    }
 
     navigation.navigate("Home");
     setLogin("");
@@ -81,20 +67,19 @@ export function RegistrationScreen() {
       alert("Sorry, we need camera roll permissions to make this work!");
       return;
     }
- 
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
-    allowsEditing: true,
-    aspect: [4, 3],
-    quality: 1,
-  });
 
-  // console.log(result);
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
 
-  if (!result.canceled) {
-    setAvatar(result.assets[0].uri);
-    
-  }
+    // console.log(result);
+
+    if (!result.canceled) {
+      setAvatar(result.assets[0].uri);
+    }
   };
 
   const uploadImageToServer = async (uri) => {
@@ -105,7 +90,7 @@ export function RegistrationScreen() {
         const response = await fetch(avatar);
 
         const file = await response.blob();
-        const uniquePostId=Date.now().toString()
+        const uniquePostId = Date.now().toString();
         const imageRef = ref(
           storage,
           `profileAvatar/${uniquePostId}/${file.data.name}`
@@ -147,7 +132,9 @@ export function RegistrationScreen() {
                     top: isFocused ? "-5%" : "-15%",
                   }}
                 >
-                  {avatar && <Image style={styles.avatar} source={{uri:"avatar"}} />}
+                  {avatar && (
+                    <Image style={styles.avatar} source={{ uri: "avatar" }} />
+                  )}
                   <View style={styles.iconBtn}>
                     <TouchableOpacity onPress={onLoadAvatar}>
                       {!avatar ? (

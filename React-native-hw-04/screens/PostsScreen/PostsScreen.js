@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { AntDesign,Feather } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { MapScreen } from "../MapScreen/MapScreen.js";
 import { InitialPostsScreen } from "./InitialPostsScreen.js";
 import { CommentsScreen } from "../CommentsScreen/CommentsScreen.js";
@@ -12,28 +12,35 @@ const NestedStack = createStackNavigator();
 
 export const PostsScreen = () => {
   const navigation = useNavigation();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
-
-  const signOut=()=>{
-   dispatch(logOut());
-   navigation.navigate('Login')
-  }
+  const signOut = () => {
+    dispatch(logOut());
+    navigation.navigate("Login");
+  };
   return (
     <NestedStack.Navigator
       initialRouteName="InitialPosts"
       screenOptions={{ headerShown: true }}
     >
-      <NestedStack.Screen name="InitialPosts" component={InitialPostsScreen} options={{
+      <NestedStack.Screen
+        name="InitialPosts"
+        component={InitialPostsScreen}
+        options={{
           ...screenOptions,
           title: "Публікації",
           headerRight: () => (
             <TouchableOpacity onPress={signOut}>
-              <Feather name="log-out" size={24} color="#BDBDBD" style={styles.arrowLeft} />
+              <Feather
+                name="log-out"
+                size={24}
+                color="#BDBDBD"
+                style={styles.arrowLeft}
+              />
             </TouchableOpacity>
-           
           ),
-        }}/>
+        }}
+      />
       <NestedStack.Screen
         name="Map"
         component={MapScreen}
@@ -94,7 +101,7 @@ const screenOptions = {
     fontWeight: "bold",
     fontSize: 17,
     lineHeight: 22,
-    marginLeft:30,
+    marginLeft: 30,
     textAlign: "center",
   },
 };

@@ -1,8 +1,6 @@
-
-import {format} from'date-fns'
-import {en} from 'date-fns/locale';
+import { format } from "date-fns";
+import { en } from "date-fns/locale";
 import {
-  Text,
   View,
   StyleSheet,
   TouchableOpacity,
@@ -14,14 +12,7 @@ import {
   Alert,
 } from "react-native";
 
-import {
-  getFirestore,
-  doc,
-  collection,
-  addDoc,
-  getDocs,
-  onSnapshot,
-} from "firebase/firestore";
+import { doc, collection, addDoc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfigs";
 
 import { useRoute } from "@react-navigation/native";
@@ -40,7 +31,7 @@ const formatDate = (date) => {
 
 export function CommentsScreen({ navigation }) {
   const { params } = useRoute();
-  console.log("params",params)
+  console.log("params", params);
   const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState([]);
   const isFocused = useIsFocused();
@@ -56,7 +47,6 @@ export function CommentsScreen({ navigation }) {
   }, []);
 
   const handleOnPress = () => {
-    // setIsFocused(false);
     Keyboard.dismiss();
   };
 
@@ -67,7 +57,7 @@ export function CommentsScreen({ navigation }) {
     }
 
     const docRef = await doc(db, "posts", params.id);
-    console.log("docRef",docRef);
+    console.log("docRef", docRef);
 
     await addDoc(collection(docRef, "comments"), {
       commentText,
@@ -79,18 +69,20 @@ export function CommentsScreen({ navigation }) {
     setCommentText("");
   };
 
-  useEffect(()=>{getAllComments()},[])
+  useEffect(() => {
+    getAllComments();
+  }, []);
 
   const getAllComments = async () => {
     try {
-      const ref=await doc(db,"posts",params.id)
-       onSnapshot(collection(ref,"comments"),(data)=>{
-        setComments(data.docs.map((doc)=> ({...doc.data(),
-          commentId: doc.id,})))
-          
-      })
+      const ref = await doc(db, "posts", params.id);
+      onSnapshot(collection(ref, "comments"), (data) => {
+        setComments(
+          data.docs.map((doc) => ({ ...doc.data(), commentId: doc.id }))
+        );
+      });
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
   };
 
@@ -103,7 +95,7 @@ export function CommentsScreen({ navigation }) {
           data={comments}
           renderItem={({ item }) => (
             <CommentComponent
-            id={item.commentIdd}
+              id={item.commentIdd}
               authorAvatar={item.avatar}
               comment={item.commentText}
               date={item.postedDate}

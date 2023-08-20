@@ -1,9 +1,9 @@
-import { StyleSheet, View, Image, Text, Dimensions } from 'react-native';
+import { StyleSheet, View, Image, Text, Dimensions } from "react-native";
 
-export const CommentComponent = ({ authorAvatar, comment, date,id }) => {
+export const CommentComponent = ({ authorAvatar, comment, date, id }) => {
   return (
     <View style={styles.commentItem}>
-      <Image style={styles.avatar} source={authorAvatar}/>
+      <Image style={styles.avatar} source={authorAvatar} />
       <View style={styles.commentWrapper} id={id}>
         <Text style={styles.commentText}>{comment}</Text>
         <Text style={styles.commentDate}>{date}</Text>
@@ -12,12 +12,10 @@ export const CommentComponent = ({ authorAvatar, comment, date,id }) => {
   );
 };
 
-
-
 const styles = StyleSheet.create({
   commentItem: {
-    width: '100%',
-    flexDirection: 'row',
+    width: "100%",
+    flexDirection: "row",
     marginBottom: 24,
   },
   avatar: {
@@ -26,29 +24,29 @@ const styles = StyleSheet.create({
 
     marginRight: 16,
 
-    backgroundColor: '#f6f6f6',
+    backgroundColor: "#f6f6f6",
     borderRadius: 100,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   commentWrapper: {
     padding: 16,
-    width: '100%',
+    width: "100%",
 
-    backgroundColor: 'rgba(0, 0, 0, 0.03)',
+    backgroundColor: "rgba(0, 0, 0, 0.03)",
     borderRadius: 6,
 
-    width: Dimensions.get('window').width - 76,
+    width: Dimensions.get("window").width - 76,
   },
   commentText: {
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 13,
     lineHeight: 18,
-    color: '#212121',
+    color: "#212121",
   },
   commentDate: {
-    fontFamily: 'Roboto',
+    fontFamily: "Roboto",
     fontSize: 10,
-    textAlign: 'right',
-    color: '#BDBDBD',
+    textAlign: "right",
+    color: "#BDBDBD",
   },
 });

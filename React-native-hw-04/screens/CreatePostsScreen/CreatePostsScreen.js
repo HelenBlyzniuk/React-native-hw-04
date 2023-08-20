@@ -109,7 +109,6 @@ export function CreatePostsScreen() {
   };
 
   const uploadPhotoToServer = async (uri) => {
-   
     const response = await fetch(img);
 
     const file = await response.blob();
@@ -123,7 +122,6 @@ export function CreatePostsScreen() {
     await uploadBytes(storageRef, file);
 
     const downloadURL = await getDownloadURL(storageRef);
-   
 
     return downloadURL;
   };
@@ -378,7 +376,7 @@ const styles = StyleSheet.create({
   user_post_form: {
     flex: 1,
     margin: 0,
-    position:"relative",
+    position: "relative",
   },
   user_post_input: {
     height: 50,
@@ -392,13 +390,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 15,
     paddingLeft: 35,
-    
   },
 
   map: {
     position: "absolute",
-    top:80,
-    left:0,
+    top: 80,
+    left: 0,
   },
 
   post_user_footer: {
